@@ -60,7 +60,7 @@ def get_all_image_files_from_dir(srcdir,folder='第一批数据'):
                     # 获取图片的详细信息
                     filesize = os.path.getsize(file)
                     img = Image.open(file)
-                    info = file + "\t" + destfile + "\t" + bookname + "\t" + str(filesize) + "\t" + str(img.size[0]) + "\t" + str(img.size[1]) + "\n"
+                    info = bookname + "\t" + name + "\t" + str(filesize) + "\t" + str(img.size[0]) + "\t" + str(img.size[1]) + "\n"
                     write_mapping_log("ALL_IMAGE_File.txt",info)
 
                 shutil.copy2(file, destfile)

@@ -1,6 +1,11 @@
 # JinRongExtractScript
 金融出版社文件拆分脚本
 
+运行环境：
+    Python2.7
+    Python3
+    JDK8
+
 数据提取流程：
 
 1.提取所有的PDF源文件，文件名重命名为当前文件夹名，并形成参照文件PDF_File.txt【GetAllPDF.py】

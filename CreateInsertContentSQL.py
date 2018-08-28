@@ -62,7 +62,7 @@ def create_insert_content_sql(txtfile):
             (sta) = exeUpdate(conn, cur, sql)
 
             if sta < 0:
-               write_mapping_log(info[0] + "_" + info[1]+"\n")
+               write_mapping_log("debug_insertconentsql.log",info[0] + "_" + info[1]+"\n")
             else:
                 print(str(i)+"_"+info[0] + "_" + info[1])
                 i = i + 1

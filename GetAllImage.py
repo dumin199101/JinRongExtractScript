@@ -63,7 +63,7 @@ def get_all_image_files_from_dir(srcdir, folder='第一批数据'):
                         img.size[0]) + "\t" + str(img.size[1]) + "\n"
                     write_mapping_log("ALL_IMAGE_File.txt", info)
 
-                # shutil.copy2(file, destfile)
+                shutil.copy2(file, destfile)
                 print file + " Copy Finished..."
                 # print info
 

@@ -27,10 +27,8 @@ def get_pic_from_xml(soup, file):
     end_index = dirname.rfind('\\')
     bookname = dirname[end_index + 1:]
 
-
     # 1.先找表格
     tables = soup.find_all('table')
-
 
     if len(tables) > 0:
         # 处理标题
@@ -43,14 +41,14 @@ def get_pic_from_xml(soup, file):
             title_list.append(title)
         for i in range(len(title_list)):
             if title_list[i] == '续表':
-                if title_list[i-1]=='暂无标题':
+                if title_list[i - 1] == '暂无标题':
                     title_list[i] = '续表'
                 else:
                     title_list[i] = title_list[i - 1] + '续表'
         title_new_list = list()
         for title in title_list:
             if title.count('续表') > 1:
-                title_new_list.append(title[:title.find('续表')]+'续表')
+                title_new_list.append(title[:title.find('续表')] + '续表')
             else:
                 title_new_list.append(title)
 
@@ -62,10 +60,11 @@ def get_pic_from_xml(soup, file):
             image = tables[i].mediaobject.imageobject.imagedata.get('fileref')[10:]
             page = image[1:image.find("_")]
             title = title_new_list[i]
-            print bookname,image
+            print bookname, image
             level = get_level_tree(tables[i], soup)
             # print bookname, image, title, cat, page, level
-            write_mapping_log("All_Image_Info.txt",bookname + "\t" + image + "\t" + title + "\t" + cat + "\t" + page + "\t" + level + "\n")
+            write_mapping_log("All_Image_Info.txt",
+                              bookname + "_" + image + "\t" + bookname + "\t" + image + "\t" + title + "\t" + cat + "\t" + page + "\t" + level + "\n")
 
     # 2.再找图表
     pics = soup.find_all('mediaobject')
@@ -83,16 +82,16 @@ def get_pic_from_xml(soup, file):
                 title = pic.parent.title.string
                 if title is None:
                     for string in pic.parent.title.strings:
-                            title = string.strip()
-                            break
+                        title = string.strip()
+                        break
                     if title is None:
                         title = '暂无标题'
 
-            print bookname,image
+            print bookname, image
             level = get_level_tree(pic, soup)
             # print bookname, image, title, cat, page, level
-            write_mapping_log("All_Image_Info.txt",bookname+"\t"+image+"\t"+title+"\t"+cat+"\t"+page+"\t"+level+"\n")
-
+            write_mapping_log("All_Image_Info.txt",
+                              bookname + "_" + image + "\t" + bookname + "\t" + image + "\t" + title + "\t" + cat + "\t" + page + "\t" + level + "\n")
 
 
 def get_level_tree(obj, soup):
@@ -108,8 +107,6 @@ def get_level_tree(obj, soup):
                 title = string
                 break
         return title.strip()
-
-
 
     def get_chapter_title():
         """
@@ -174,22 +171,22 @@ def get_level_tree(obj, soup):
         level_2 = get_title(sect2_obj)
         level_1 = get_title(sect1_obj)
         level = chapter + "_" + level_1 + '_' + level_2 + '_' + level_3
-    elif name=='figure':
+    elif name == 'figure':
         figure_tag = obj.parent
         pname = figure_tag.parent.name
-        if pname=='sect3':
+        if pname == 'sect3':
             level_3 = get_title(obj.parent.parent)
             sect2_obj = obj.parent.parent.parent
             sect1_obj = sect2_obj.parent.parent
             level_2 = get_title(sect2_obj)
             level_1 = get_title(sect1_obj)
             level = chapter + "_" + level_1 + '_' + level_2 + '_' + level_3
-        elif pname=='sect2':
+        elif pname == 'sect2':
             level_2 = get_title(obj.parent.parent)
             sect1_obj = obj.parent.parent.parent
             level_1 = get_title(sect1_obj)
             level = chapter + "_" + level_1 + '_' + level_2
-        elif pname=='sect1':
+        elif pname == 'sect1':
             level_1 = get_title(obj.parent.parent)
             level = chapter + "_" + level_1
         else:

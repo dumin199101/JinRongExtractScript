@@ -7,7 +7,6 @@ import sys
 import shutil
 from PIL import Image
 
-
 ROOTDIR = os.path.dirname(os.path.abspath(sys.argv[0]))
 RESULTDIR = ROOTDIR + "\\Result\\"
 DEAL_MIDDILE_DIR = ROOTDIR + "\\Deal-Middle\\"
@@ -25,7 +24,7 @@ def write_mapping_log(logname, content):
         f1.write(content.encode("utf-8"))
 
 
-def get_all_image_files_from_dir(srcdir,folder='第一批数据'):
+def get_all_image_files_from_dir(srcdir, folder='第一批数据'):
     """
     提取所有的图片，封面图片放到Covers文件夹，其余图片放到Images文件夹
     :param srcdir:
@@ -38,7 +37,7 @@ def get_all_image_files_from_dir(srcdir,folder='第一批数据'):
     if not os.path.exists(destfolder):
         os.makedirs(destfolder)
     for filename in os.listdir(srcdir):
-        file = os.path.join(srcdir,filename)
+        file = os.path.join(srcdir, filename)
         if os.path.isdir(file):
             get_all_image_files_from_dir(file)
         else:
@@ -51,7 +50,7 @@ def get_all_image_files_from_dir(srcdir,folder='第一批数据'):
                     # 提取封面图片
                     destfile = COVER_DIR + bookname + FILE_IMAGE_EXTENSION
                     info = file + "\t" + destfile + "\t" + bookname + "\n"
-                    write_mapping_log("Cover_Mapping.txt",info)
+                    write_mapping_log("Cover_Mapping.txt", info)
                 else:
                     newfolder = BookImage_DIR + folder + "\\" + bookname
                     if not os.path.exists(newfolder):
@@ -60,21 +59,18 @@ def get_all_image_files_from_dir(srcdir,folder='第一批数据'):
                     # 获取图片的详细信息
                     filesize = os.path.getsize(file)
                     img = Image.open(file)
-                    info = bookname + "\t" + name + "\t" + str(filesize) + "\t" + str(img.size[0]) + "\t" + str(img.size[1]) + "\n"
-                    write_mapping_log("ALL_IMAGE_File.txt",info)
+                    info = bookname + "_" + name + "\t" + bookname + "\t" + name + "\t" + str(filesize) + "\t" + str(
+                        img.size[0]) + "\t" + str(img.size[1]) + "\n"
+                    write_mapping_log("ALL_IMAGE_File.txt", info)
 
-                shutil.copy2(file, destfile)
+                # shutil.copy2(file, destfile)
                 print file + " Copy Finished..."
                 # print info
-
-
-
 
 
 def main():
     srcdir = u"E:\\Goosuu\\JinRongSource\\第一批数据"
     get_all_image_files_from_dir(srcdir)
-
 
 
 if __name__ == '__main__':

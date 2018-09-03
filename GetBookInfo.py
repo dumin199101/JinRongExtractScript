@@ -30,6 +30,10 @@ def write_mapping_log(logname, content):
 
 def get_book_info(file):
     soup = BeautifulSoup(open(file.encode("gbk")),features='xml')
+
+    (filepath, name) = os.path.split(file)
+    (shotname,extension) = os.path.splitext(name)
+
     dict = []
     info = ''
 
@@ -43,14 +47,16 @@ def get_book_info(file):
             # 排除seriesTitle缺失的情况
             if len(titles)==2:
                 info = info + "暂无" + "\t"
-                title = title.string
+                # title = title.string
+                title = shotname
                 info = info  + title + "\t"
             else:
                 if title.has_attr('role'):
                     seriestitle = title.string
                     info = info  + seriestitle + "\t"
                 else:
-                    title = title.string
+                    # title = title.string
+                    title = shotname
                     info = info + title + "\t"
         # 重置列表
         dict = []
@@ -70,9 +76,12 @@ def get_book_info(file):
 
     editors = soup.find_all("editor")
     editor_list = []
-    for editor in editors:
-        editor_list.append(editor.personname.string)
-    editor_info = ",".join(editor_list)
+    if len(editors) > 0:
+        for editor in editors:
+            editor_list.append(editor.personname.string)
+        editor_info = ",".join(editor_list)
+    else:
+        editor_info = '暂无'
 
     info = info + author_info + "\t" + editor_info + "\t"
 

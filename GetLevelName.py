@@ -39,8 +39,8 @@ def read_mapping_log(logname):
             if max_level < level:
                 max_level = level
         print "当前文件最大层级数：",max_level
-        if max_level>4:
-            print "最大层级数超过限定值4，请注意调整程序..."
+        if max_level>5:
+            print "最大层级数超过限定值5，请注意调整程序..."
             return False
     with open(logname, "r") as f1:
         regex_tab = re.compile("\\t")
@@ -49,7 +49,7 @@ def read_mapping_log(logname):
             if len(line) < 1:
                 break
             info = regex_tab.split(line)
-            global ChapterName,ChapterName2,ChapterName3
+            global ChapterName,ChapterName2,ChapterName3,ChapterName4
             level = int(info[6])
             if level==1:
                 ChapterName = info[0]
@@ -62,6 +62,9 @@ def read_mapping_log(logname):
                 ChapterName3 = info[0]
             elif level==4:
                 str = info[0] + "\t" + info[1] + "\t" +ChapterName3 + "\n"
+                ChapterName4 = info[0]
+            elif level==5:
+                str = info[0] + "\t" + info[1] + "\t" + ChapterName4 + "\n"
             # print str
             write_mapping_log("MULU_Level_File.txt",str)
 

@@ -20,7 +20,8 @@ def write_mapping_log(logname, content):
     with open(logname, "a+") as f1:
         f1.write(content.encode("utf-8"))
 
-def get_all_pdf_files_from_dir(srcdir,folder='第一批数据'):
+# 配置数据
+def get_all_pdf_files_from_dir(srcdir,folder='第二批数据'):
     """
     提取所有的PDF源文件，文件名重命名为当前文件夹名，并形成参照文件PDF_File.txt
     :param srcdir:
@@ -34,23 +35,32 @@ def get_all_pdf_files_from_dir(srcdir,folder='第一批数据'):
         if os.path.isdir(file):
             get_all_pdf_files_from_dir(file)
         else:
-            if filename.endswith("H.pdf"):
-                (filepath, name) = os.path.split(file)
-                dirname  = os.path.dirname(filepath)
-                end_index = dirname.rfind('\\')
-                bookname = dirname[end_index+1:]
-                destfile = RESULTDIR + folder + "\\" + bookname + FILE_PDF_EXTENSION
-                info = file + "\t" + destfile + "\t" + bookname + "\n"
-                write_mapping_log("PDF_FILE.txt",info)
-                shutil.copy2(file,destfile)
-                print file + " Copy Finished..."
+            if filename.endswith(".pdf"):
+                if filename.endswith("H.pdf"):
+                    (filepath, name) = os.path.split(file)
+                    dirname = os.path.dirname(filepath)
+                    end_index = dirname.rfind('\\')
+                    bookname = dirname[end_index + 1:]
+                    destfile = RESULTDIR + folder + "\\" + bookname + FILE_PDF_EXTENSION
+                    info = file + "\t" + destfile + "\t" + bookname + "\n"
+                    write_mapping_log("PDF_FILE.txt", info)
+                    shutil.copy2(file, destfile)
+                    print file + " Copy Finished..."
+                elif not filename.endswith("L.pdf"):
+                    write_mapping_log("PDF.error.log.txt",file+"\n")
+
+
+
+
 
 
 
 
 
 def main():
-    srcdir = u"E:\\Goosuu\\JinRongSource\\第一批数据"
+    # 配置数据
+    # srcdir = u"E:\\Goosuu\\JinRongSource\\第一批数据"
+    srcdir = u"E:\\Goosuu\\JinRongSource\\第二批数据"
     get_all_pdf_files_from_dir(srcdir)
 
 

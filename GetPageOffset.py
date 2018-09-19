@@ -9,7 +9,8 @@ XPDFDIR = SCRIPTDIR + '\\xpdf'
 RESULTDIR = SCRIPTDIR + "\\Result"
 
 # 配置数据
-PDFDIR = RESULTDIR + "\\第一批数据\\"
+# PDFDIR = RESULTDIR + "\\第一批数据\\"
+PDFDIR = RESULTDIR + "\\第二批数据\\"
 
 
 def write_mapping_log(logname, content):
@@ -52,8 +53,8 @@ def extract_jie(txtpath):
     # 初始化level值为1
     level = 1
     while True:
-        if level > 5:
-            print "层级数设定为4，超过规定设定条件，循环终止..."
+        if level > 6:
+            print "层级数设定为5，超过规定设定条件，循环终止..."
             break
         print level
         mapping_file = open(txtpath, "r")

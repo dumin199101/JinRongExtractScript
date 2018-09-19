@@ -21,7 +21,8 @@ def write_mapping_log(logname, content):
     with open(logname, "a+") as f1:
         f1.write(content.encode("utf-8"))
 
-def get_all_mulu_files_from_dir(srcdir,folder='第一批数据'):
+# 配置数据
+def get_all_mulu_files_from_dir(srcdir,folder='第二批数据'):
     """
     提取所有的XML目录信息，文件名重命名为当前文件夹名，并形成参照文件XML_MULU_File.txt
     :param srcdir:
@@ -35,7 +36,7 @@ def get_all_mulu_files_from_dir(srcdir,folder='第一批数据'):
         if os.path.isdir(file):
             get_all_mulu_files_from_dir(file)
         else:
-            if filename.endswith("1_toc.xml"):
+            if filename.endswith("1_toc.xml") or filename.endswith("1_toc(1).xml"):
                 (filepath, name) = os.path.split(file)
                 dirname  = os.path.dirname(filepath)
                 end_index = dirname.rfind('\\')
@@ -45,13 +46,17 @@ def get_all_mulu_files_from_dir(srcdir,folder='第一批数据'):
                 write_mapping_log("XML_MULU_File.txt",info)
                 shutil.copy2(file,destfile)
                 print file + " Copy Finished..."
+            elif filename.endswith(".xml") and not filename.startswith("2_chapter") and not filename.startswith("Main.xml"):
+                write_mapping_log("PDF_Mulu_error.txt",file+"\n")
 
 
 
 
 
 def main():
-    srcdir = u"E:\\Goosuu\\JinRongSource\\第一批数据"
+    # 配置数据
+    # srcdir = u"E:\\Goosuu\\JinRongSource\\第一批数据"
+    srcdir = u"E:\\Goosuu\\JinRongSource\\第二批数据"
     get_all_mulu_files_from_dir(srcdir)
 
 

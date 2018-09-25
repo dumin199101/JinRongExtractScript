@@ -82,8 +82,11 @@ def get_book_content(file):
         #                                        7:] + "\t" + pdfpage + "\t" + bookpage + "\t" + bookname + "_" + level[
         #                                                                                                         7:] + "_" + title + "\t" + del_blank_char(
         #     info)
-        info = bookname + "\t" + title + "\t" + level[7:] + "\t" +  pdfpage + "\t" + bookpage + "\t" + bookname+"_"+level[7:]+"_"+title + "\t"  + del_blank_char(info) + "\n"
-        write_mapping_log("Check_Content_File.txt",info)
+        info = bookname + "\t" + title + "\t" + level[
+                                                7:] + "\t" + pdfpage + "\t" + bookpage + "\t" + bookname + "_" + level[
+                                                                                                                 7:] + "_" + title + "\t" + del_blank_char(
+            info) + "\n"
+        write_mapping_log("Check_Content_File.txt", info)
         print bookname + "_" + title + " Get Content Successfully..."
 
     def get_sect1_content(xmlid):
@@ -121,8 +124,11 @@ def get_book_content(file):
         #                                              7:] + "\t" + sect1_pdfpage + "\t" + sect1_bookpage + "\t" + bookname + "_" + sect1_level[
         #                                                                                                                           7:] + "_" + sect1_title + "\t" + del_blank_char(
         #     sect1_info)
-        sect1_info = bookname + "\t" + sect1_title + "\t" + sect1_level[7:] + "\t" + sect1_pdfpage + "\t" + sect1_bookpage + "\t" + bookname+"_"+sect1_level[7:]+"_"+sect1_title + "\t" + del_blank_char(sect1_info) + "\n"
-        write_mapping_log("Check_Content_File.txt",sect1_info)
+        sect1_info = bookname + "\t" + sect1_title + "\t" + sect1_level[
+                                                            7:] + "\t" + sect1_pdfpage + "\t" + sect1_bookpage + "\t" + bookname + "_" + sect1_level[
+                                                                                                                                         7:] + "_" + sect1_title + "\t" + del_blank_char(
+            sect1_info) + "\n"
+        write_mapping_log("Check_Content_File.txt", sect1_info)
         print bookname + "_" + sect1_title + " Get Content Successfully..."
 
     def get_sect2_content(xmlid):
@@ -161,8 +167,11 @@ def get_book_content(file):
         #                                                                                                                           7:] + "_" + sect2_title + "\t" + del_blank_char(
         #     sect2_info)
 
-        sect2_info = bookname + "\t" + sect2_title + "\t" + sect2_level[7:] + "\t" + sect2_pdfpage + "\t" + sect2_bookpage + "\t" + bookname+"_"+sect2_level[7:]+"_"+sect2_title + "\t" + del_blank_char(sect2_info) + "\n"
-        write_mapping_log("Check_Content_File.txt",sect2_info)
+        sect2_info = bookname + "\t" + sect2_title + "\t" + sect2_level[
+                                                            7:] + "\t" + sect2_pdfpage + "\t" + sect2_bookpage + "\t" + bookname + "_" + sect2_level[
+                                                                                                                                         7:] + "_" + sect2_title + "\t" + del_blank_char(
+            sect2_info) + "\n"
+        write_mapping_log("Check_Content_File.txt", sect2_info)
         print bookname + "_" + sect2_title + " Get Content Successfully..."
 
     def get_sect3_content(xmlid):
@@ -201,8 +210,11 @@ def get_book_content(file):
         #                                                                                                                           7:] + "_" + sect3_title + "\t" + del_blank_char(
         #     sect3_info)
 
-        sect3_info = bookname + "\t" + sect3_title + "\t" + sect3_level[7:] + "\t" + sect3_pdfpage + "\t" + sect3_bookpage + "\t" + bookname+"_"+sect3_level[7:]+"_"+sect3_title + "\t" + del_blank_char(sect3_info) + "\n"
-        write_mapping_log("Check_Content_File.txt",sect3_info)
+        sect3_info = bookname + "\t" + sect3_title + "\t" + sect3_level[
+                                                            7:] + "\t" + sect3_pdfpage + "\t" + sect3_bookpage + "\t" + bookname + "_" + sect3_level[
+                                                                                                                                         7:] + "_" + sect3_title + "\t" + del_blank_char(
+            sect3_info) + "\n"
+        write_mapping_log("Check_Content_File.txt", sect3_info)
         print bookname + "_" + sect3_title + " Get Content Successfully..."
 
     # 处理一级标签
@@ -323,7 +335,8 @@ def get_all_book_content(srcdir):
 
 def main():
     # 配置数据
-    srcdir = u"E:\Goosuu\JinRong\Script\Deal-Middle\Chapter_XML\第一批数据"
+    # srcdir = u"E:\Goosuu\JinRong\Script\Deal-Middle\Chapter_XML\第一批数据"
+    srcdir = u"E:\Goosuu\JinRong\Script\Deal-Middle\Chapter_XML\第二批数据"
     get_all_book_content(srcdir)
 
 

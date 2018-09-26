@@ -37,6 +37,10 @@ def read_mapping_log(logname):
             bookname = info[2]
             write_mapping_log("MagazineBookName.txt",bookname)
 
+def get_book_name(srcdir):
+    for filename in os.listdir(srcdir):
+        (name,ext) = os.path.splitext(filename)
+        write_mapping_log("MagazineBookName.txt",name+"\n")
 
 
 
@@ -53,7 +57,9 @@ def get_all_book():
     获取所有的书名
     :return:
     """
-    read_mapping_log("MAGAZINE_FILE.txt")
+    # read_mapping_log("MAGAZINE_FILE.txt")
+    srcdir = u"I:\\Deal-Middle\\Magazine\\第一批数据"
+    get_book_name(srcdir)
 
 
 

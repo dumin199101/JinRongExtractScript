@@ -6,7 +6,7 @@ import pymysql
 # mysqlHelper
 def connDB():
     # 连接数据库
-    conn = pymysql.connect(host="", port=3306,user="root", passwd="", db="test", charset='utf8');
+    conn = pymysql.connect(host="", port=3306,user="root", passwd="", db="test", charset='utf8mb4');
     cur = conn.cursor()
     return (conn, cur)
 

@@ -24,7 +24,7 @@ def write_mapping_log(logname, content):
         f1.write(content.encode("utf-8"))
 
 
-def get_all_image_files_from_dir(srcdir, folder='第一批数据'):
+def get_all_image_files_from_dir(srcdir, folder='第二批数据'):
     """
     提取所有的图片，封面图片放到Covers文件夹，其余图片放到Images文件夹
     :param srcdir:
@@ -69,7 +69,8 @@ def get_all_image_files_from_dir(srcdir, folder='第一批数据'):
 
 
 def main():
-    srcdir = u"E:\\Goosuu\\JinRongSource\\第一批数据"
+    # srcdir = u"E:\\Goosuu\\JinRongSource\\第一批数据"
+    srcdir = u"E:\\Goosuu\\JinRongSource\\第二批数据"
     get_all_image_files_from_dir(srcdir)
 
 

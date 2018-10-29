@@ -83,10 +83,10 @@ def get_image_relate_content(file):
                             if str(string).isdigit():
                                 continue
                             info = info + string
-        print bookname+"_"+image,bookname,title, cat, image, page, del_blank_char(info)
-        # info = bookname+"_"+image+"\t"+bookname+"\t"+title+"\t"+cat+"\t"+image+"\t"+page+"\t"+del_blank_char(info) + "\n"
-        # write_mapping_log("Get_Images_Content.txt", info)
-        # print bookname,title
+        # print bookname+"_"+image,bookname,title, cat, image, page, del_blank_char(info)
+        info = bookname+"_"+image+"\t"+bookname+"\t"+title+"\t"+cat+"\t"+image+"\t"+page+"\t"+del_blank_char(info) + "\n"
+        write_mapping_log("Get_Images_Content.txt", info)
+        print bookname,title
 
     def get_chapters_content(chapt):
         """
@@ -116,10 +116,10 @@ def get_image_relate_content(file):
                             if str(string).isdigit():
                                 continue
                             info = info + string
-        print bookname+"_"+image,bookname,title, cat, image, page, del_blank_char(info)
-        # info = bookname+"_"+image+"\t"+bookname + "\t" + title + "\t" + cat + "\t" + image + "\t" + page + "\t" + del_blank_char(info) + "\n"
-        # write_mapping_log("Get_Images_Content.txt", info)
-        # print bookname,title
+        # print bookname+"_"+image,bookname,title, cat, image, page, del_blank_char(info)
+        info = bookname+"_"+image+"\t"+bookname + "\t" + title + "\t" + cat + "\t" + image + "\t" + page + "\t" + del_blank_char(info) + "\n"
+        write_mapping_log("Get_Images_Content.txt", info)
+        print bookname,title
 
     def get_chapter_content():
         """
@@ -149,10 +149,10 @@ def get_image_relate_content(file):
                             if str(string).isdigit():
                                 continue
                             info = info + string
-        print bookname+"_"+image,bookname, title, cat, image, page, del_blank_char(info)
-        # info = bookname+"_"+image+"\t"+bookname + "\t" + title + "\t" + cat + "\t" + image + "\t" + page + "\t" + del_blank_char(info) + "\n"
-        # write_mapping_log("Get_Images_Content.txt", info)
-        # print bookname,title
+        # print bookname+"_"+image,bookname, title, cat, image, page, del_blank_char(info)
+        info = bookname+"_"+image+"\t"+bookname + "\t" + title + "\t" + cat + "\t" + image + "\t" + page + "\t" + del_blank_char(info) + "\n"
+        write_mapping_log("Get_Images_Content.txt", info)
+        print bookname,title
 
     def get_sect1_content(xmlid):
         """
@@ -187,10 +187,10 @@ def get_image_relate_content(file):
                                     continue
                                 sect1_info = sect1_info + string
                                 # print string
-        print bookname+"_"+image,bookname,title, cat, image, page, del_blank_char(sect1_info)
-        # sect1_info = bookname+"_"+image+"\t"+bookname + "\t" + title + "\t" + cat + "\t" + image + "\t" + page + "\t" + del_blank_char(sect1_info) + "\n"
-        # write_mapping_log("Get_Images_Content.txt", sect1_info)
-        # print bookname,title
+        # print bookname+"_"+image,bookname,title, cat, image, page, del_blank_char(sect1_info)
+        sect1_info = bookname+"_"+image+"\t"+bookname + "\t" + title + "\t" + cat + "\t" + image + "\t" + page + "\t" + del_blank_char(sect1_info) + "\n"
+        write_mapping_log("Get_Images_Content.txt", sect1_info)
+        print bookname,title
 
     def get_sect2_content(xmlid):
         """
@@ -225,11 +225,11 @@ def get_image_relate_content(file):
                                     continue
                                 sect2_info = sect2_info + string
                                 # print string
-        print bookname+"_"+image,bookname, title, cat, image, page, del_blank_char(sect2_info)
+        # print bookname+"_"+image,bookname, title, cat, image, page, del_blank_char(sect2_info)
 
-        # sect2_info = bookname+"_"+image+"\t"+bookname + "\t" + title + "\t" + cat + "\t" + image + "\t" + page + "\t" + del_blank_char(sect2_info) + "\n"
-        # write_mapping_log("Get_Images_Content.txt", sect2_info)
-        # print bookname,title
+        sect2_info = bookname+"_"+image+"\t"+bookname + "\t" + title + "\t" + cat + "\t" + image + "\t" + page + "\t" + del_blank_char(sect2_info) + "\n"
+        write_mapping_log("Get_Images_Content.txt", sect2_info)
+        print bookname,title
 
     def get_sect3_content(xmlid):
         """
@@ -263,10 +263,10 @@ def get_image_relate_content(file):
                                     continue
                                 sect3_info = sect3_info + string
 
-        print bookname+"_"+image,bookname, title, cat, image, page, del_blank_char(sect3_info)
-        # sect3_info = bookname+"_"+image+"\t"+bookname + "\t" + title + "\t" + cat + "\t" + image + "\t" + page + "\t" + del_blank_char(sect3_info) + "\n"
-        # write_mapping_log("Get_Images_Content.txt", sect3_info)
-        # print bookname,title
+        # print bookname+"_"+image,bookname, title, cat, image, page, del_blank_char(sect3_info)
+        sect3_info = bookname+"_"+image+"\t"+bookname + "\t" + title + "\t" + cat + "\t" + image + "\t" + page + "\t" + del_blank_char(sect3_info) + "\n"
+        write_mapping_log("Get_Images_Content.txt", sect3_info)
+        print bookname,title
 
     def get_sect4_content(xmlid):
         """
@@ -299,11 +299,11 @@ def get_image_relate_content(file):
                                 if str(string).isdigit():
                                     continue
                                 sect4_info = sect4_info + string
-        print bookname+"_"+image,bookname,title, cat, image, page, del_blank_char(sect4_info)
+        # print bookname+"_"+image,bookname,title, cat, image, page, del_blank_char(sect4_info)
 
-        # sect4_info = bookname+"_"+image+"\t"+bookname + "\t" + title + "\t" + cat + "\t" + image + "\t" + page + "\t" + del_blank_char(sect4_info) + "\n"
-        # write_mapping_log("Get_Images_Content.txt", sect4_info)
-        # print bookname,title
+        sect4_info = bookname+"_"+image+"\t"+bookname + "\t" + title + "\t" + cat + "\t" + image + "\t" + page + "\t" + del_blank_char(sect4_info) + "\n"
+        write_mapping_log("Get_Images_Content.txt", sect4_info)
+        print bookname,title
 
     def get_content(ptag):
         """

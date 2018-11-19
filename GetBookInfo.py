@@ -143,14 +143,17 @@ def get_book_info(file):
     info = info + price + "\t" + language + "\t" + str(wordnum) + "\t" + sheets + "\t" + bindingformat + "\t"
 
     # 关键词
-    keywords = soup.keywordset.stripped_strings
-    key = ''
-    for keyword in keywords:
-        # key = key + keyword
-        key = key + keyword + ","
+    if soup.keywordset is not None:
+        keywords = soup.keywordset.stripped_strings
+        key = ''
+        for keyword in keywords:
+            # key = key + keyword
+            key = key + keyword + ","
 
-    key = key[:key.rfind(",")]
-    info = info + key + "\t"
+        key = key[:key.rfind(",")]
+        info = info + key + "\t"
+    else:
+        info = info + "暂无关键词" + "\t"
 
     # 出版时间 版次：
     revnumber = soup.revhistory.revision.revnumber.string
@@ -163,12 +166,14 @@ def get_book_info(file):
 
     info = info + pages + "\t"  + CIP_info + "\n"
 
+    # print info
     write_mapping_log("BookInfo.txt",info)
 
 def main():
     # 配置数据
     # srcdir = u'E:\Goosuu\JinRong\Script\Deal-Middle\BOOKINFO_XML\第一批数据'
-    srcdir = u'E:\Goosuu\JinRong\Script\Deal-Middle\BOOKINFO_XML\第二批数据'
+    # srcdir = u'E:\Goosuu\JinRong\Script\Deal-Middle\BOOKINFO_XML\第二批数据'
+    srcdir = u'E:\Goosuu\JinRong\Script\Deal-Middle\BOOKINFO_XML\第三批数据'
     for filename in os.listdir(srcdir):
         print filename
         file = os.path.join(srcdir, filename)

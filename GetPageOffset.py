@@ -10,7 +10,8 @@ RESULTDIR = SCRIPTDIR + "\\Result"
 
 # 配置数据
 # PDFDIR = RESULTDIR + "\\第一批数据\\"
-PDFDIR = RESULTDIR + "\\第二批数据\\"
+# PDFDIR = RESULTDIR + "\\第二批数据\\"
+PDFDIR = RESULTDIR + "\\第三批数据\\"
 
 
 def write_mapping_log(logname, content):

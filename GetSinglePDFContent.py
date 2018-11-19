@@ -74,8 +74,8 @@ def get_single_pdf_content(filename):
 
 def main():
     # Step1:配置数据：
-    txtfile = u"Content_File.txt"
-    get_level1_content(txtfile)
+    # txtfile = u"Content_File.txt"
+    # get_level1_content(txtfile)
 
     # Step2:配置数据：
     txtfile = u"Content_Level1_File.txt"

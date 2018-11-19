@@ -22,7 +22,7 @@ def write_mapping_log(logname, content):
         f1.write(content.encode("utf-8"))
 
 # 配置数据
-def get_all_bookinfo_xml_files_from_dir(srcdir,folder='第二批数据'):
+def get_all_bookinfo_xml_files_from_dir(srcdir,folder='第三批数据'):
     """
     :param srcdir:
     :return:
@@ -56,7 +56,8 @@ def get_all_bookinfo_xml_files_from_dir(srcdir,folder='第二批数据'):
 def main():
     # 配置数据
     # srcdir = u"E:\\Goosuu\\JinRongSource\\第一批数据"
-    srcdir = u"E:\\Goosuu\\JinRongSource\\第二批数据"
+    # srcdir = u"E:\\Goosuu\\JinRongSource\\第二批数据"
+    srcdir = u"E:\\Goosuu\\JinRongSource\\第三批数据"
     get_all_bookinfo_xml_files_from_dir(srcdir)
 
 

@@ -78,7 +78,9 @@ def get_all_mulu_info_from_xml(srcdir):
 
 def main():
     # 配置数据
-    srcdir = u'E:\Goosuu\JinRong\Script\Deal-Middle\MULU_XML\第二批数据'
+    # srcdir = u'E:\Goosuu\JinRong\Script\Deal-Middle\MULU_XML\第一批数据'
+    # srcdir = u'E:\Goosuu\JinRong\Script\Deal-Middle\MULU_XML\第二批数据'
+    srcdir = u'E:\Goosuu\JinRong\Script\Deal-Middle\MULU_XML\第三批数据'
     get_all_mulu_info_from_xml(srcdir)
 
 

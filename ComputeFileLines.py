@@ -14,5 +14,5 @@ def compute_lines(filepath):
 
 
 if __name__ == '__main__':
-    filepath = "Check_Content_File.txt"
+    filepath = "Content_PDF_File.txt"
     compute_lines(filepath)

@@ -439,7 +439,8 @@ def get_all_image_relate_content(srcdir):
 def main():
     # 配置数据
     # srcdir = u"E:\Goosuu\JinRong\Script\Deal-Middle\Chapter_XML\第一批数据"
-    srcdir = u"E:\Goosuu\JinRong\Script\Deal-Middle\Chapter_XML\第二批数据"
+    # srcdir = u"E:\Goosuu\JinRong\Script\Deal-Middle\Chapter_XML\第二批数据"
+    srcdir = u"E:\Goosuu\JinRong\Script\Deal-Middle\Chapter_XML\第三批数据"
     get_all_image_relate_content(srcdir)
 
 

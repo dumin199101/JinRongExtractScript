@@ -36,7 +36,6 @@ def write_mapping_log(logname, content):
 
 
 def get_magazine_title(file):
-
     (filepath, name) = os.path.split(file)
     (bookname, extension) = os.path.splitext(name)
 
@@ -52,7 +51,7 @@ def get_magazine_title(file):
         banbie = '信息不详'
     cover = soup.select('cover')[0].get_text()
     file = soup.select('file')[0].get_text()
-    print bookname,magazineId, magzineName, magzineYear, magzineOrder, banbie, cover, file
+    print bookname, magazineId, magzineName, magzineYear, magzineOrder, banbie, cover, file
     # info = bookname + "\t" + magazineId + "\t" + magzineName + "\t" + magzineYear + "\t" + magzineOrder + "\t" + banbie + "\t" + cover + "\t" + file + "\n"
     # write_mapping_log("MagazineInfo.txt",info)
 
@@ -66,7 +65,7 @@ def get_magazine_title(file):
             magazinecolumn_tags = chapter.magazinecolumns.find_all('magazinecolumn')
             for magazinecolumn_tag in magazinecolumn_tags:
                 # 去除空白字符
-                #print "*" * 10, del_blank_char(magazinecolumn_tag.find('name').string)
+                # print "*" * 10, del_blank_char(magazinecolumn_tag.find('name').string)
                 # 获取二级标签
                 docs_tag = magazinecolumn_tag.docs.find_all('doc')
                 for doc_tag in docs_tag:
@@ -131,13 +130,11 @@ def get_magazine_title(file):
                     issueNo = doc_tag.front.issueNo.string
                     if issueNo is None:
                         issueNo = '暂无'
-                    pageRange = doc_tag.front.pageRange.string
-                    if pageRange is None:
-                        pageRange = '0'
+                    pageRange = doc_tag.content.find(role="pdfpage").string
                     pages = doc_tag.front.pages.string
-                    #print "*" * 20, bookname,id, title, subtitle, englishtitle, englishsubtitle, person_info, key, key_ens, abstract, enabstract, fund, issue, issueNo, pageRange, pages
-                    # info = bookname+"_"+id+"_"+title+"\t"+bookname + "\t" + id + "\t" + title + "\t" + subtitle + "\t" + englishtitle + "\t" + englishsubtitle + "\t" + person_info + "\t" + key + "\t" + key_ens + "\t" + abstract + "\t" + enabstract + "\t" + fund + "\t" + issue + "\t" + issueNo + "\t" + pageRange + "\t" + pages + "\n"
-                    # write_mapping_log("MagazineTitle.txt",info)
+                    # print "*" * 20, bookname,id, title, subtitle, englishtitle, englishsubtitle, person_info, key, key_ens, abstract, enabstract, fund, issue, issueNo, pageRange, pages
+                    # info = bookname + "_" + id + "_" + title + "\t" + bookname + "_" + id + "\t" + bookname + "\t" + id + "\t" + title + "\t" + subtitle + "\t" + englishtitle + "\t" + englishsubtitle + "\t" + person_info + "\t" + key + "\t" + key_ens + "\t" + abstract + "\t" + enabstract + "\t" + fund + "\t" + issue + "\t" + issueNo + "\t" + pageRange + "\t" + pages + "\n"
+                    # write_mapping_log("MagazineTitle.txt", info)
                     # 第三部分获取正文信息：
                     content_file = doc_tag.content.file.string
                     print content_file
@@ -221,12 +218,10 @@ def get_magazine_title(file):
                     issueNo = doc_tag.front.issueNo.string
                     if issueNo is None:
                         issueNo = '暂无'
-                    pageRange = doc_tag.front.pageRange.string
-                    if pageRange is None:
-                        pageRange = '0'
+                    pageRange = doc_tag.content.find(role="pdfpage").string
                     pages = doc_tag.front.pages.string
-                    #print "*" * 30, bookname,id, title, subtitle, englishtitle, englishsubtitle, person_info, key, key_ens, abstract, enabstract, fund, issue, issueNo, pageRange, pages
-                    # info = bookname+"_"+id+"_"+title+"\t"+bookname + "\t" + id + "\t" + title + "\t" + subtitle + "\t" + englishtitle + "\t" + englishsubtitle + "\t" + person_info + "\t" + key + "\t" + key_ens + "\t" + abstract + "\t" + enabstract + "\t" + fund + "\t" + issue + "\t" + issueNo + "\t" + pageRange + "\t" + pages + "\n"
+                    # print "*" * 30, bookname,id, title, subtitle, englishtitle, englishsubtitle, person_info, key, key_ens, abstract, enabstract, fund, issue, issueNo, pageRange, pages
+                    # info = bookname + "_" + id + "_" + title + "\t" + bookname + "_" + id + "\t" + bookname + "\t" + id + "\t" + title + "\t" + subtitle + "\t" + englishtitle + "\t" + englishsubtitle + "\t" + person_info + "\t" + key + "\t" + key_ens + "\t" + abstract + "\t" + enabstract + "\t" + fund + "\t" + issue + "\t" + issueNo + "\t" + pageRange + "\t" + pages + "\n"
                     # write_mapping_log("MagazineTitle.txt", info)
                     # 第三部分获取正文信息：
                     content_file = doc_tag.content.file.string
@@ -245,10 +240,9 @@ def get_magazine_title(file):
 
 def get_magazine_titles(srcdir):
     for filename in os.listdir(srcdir):
-        file = os.path.join(srcdir,filename)
+        file = os.path.join(srcdir, filename)
         if filename.endswith("xml"):
             get_magazine_title(file)
-
 
 
 def main():
@@ -260,5 +254,3 @@ if __name__ == '__main__':
     reload(sys)
     sys.setdefaultencoding('utf8')
     main()
-
-

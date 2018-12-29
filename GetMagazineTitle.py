@@ -146,7 +146,7 @@ def get_magazine_title(file):
                             else:
                                 for string in tag.strings:
                                     content = content + string
-                    info = bookname + "_" + id + "_" + title + "\t" + bookname + "\t" + id + "\t" + title + "\t" + content + "\n"
+                    info = bookname + "_" + id + "_" + title + "\t" + bookname + "\t" + id + "\t" + title + "\t" + del_blank_char(content) + "\n"
                     write_mapping_log("MagazineContent.txt", info)
         else:
             # print "*" * 10, del_blank_char(name_tag.string)
@@ -234,7 +234,7 @@ def get_magazine_title(file):
                             else:
                                 for string in tag.strings:
                                     content = content + string
-                    info = bookname+"_"+id+"_"+title+"\t"+bookname + "\t" + id + "\t" + title + "\t" + content + "\n"
+                    info = bookname+"_"+id+"_"+title+"\t"+bookname + "\t" + id + "\t" + title + "\t" + del_blank_char(content) + "\n"
                     write_mapping_log("MagazineContent.txt",info)
 
 

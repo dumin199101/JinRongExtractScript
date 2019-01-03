@@ -23,21 +23,21 @@ regex_tab = re.compile("\\t")
 
 
 def get_diff_items():
-    with open(u"MagazinePDF.txt", "r") as f1:
+    with open(u"MagazineTitle.txt", "r") as f1:
         while True:
             line1 = f1.readline()
             if len(line1) < 1:
                 break
             info1 = regex_tab.split(line1)
-            set_items_pdf.add(info1[0])
+            set_items_pdf.add(info1[1])
 
-    with open(u"MagazineTitle.txt", "r") as f2:
+    with open(u"MagazinePDF.txt", "r") as f2:
         while True:
             line = f2.readline()
             if len(line) < 1:
                 break
             info = regex_tab.split(line)
-            set_items_title.add(info[1])
+            set_items_title.add(info[0])
 
     set_diff = set_items_pdf.difference(set_items_title)
 

@@ -53,7 +53,7 @@ def read_mapping_log(logname):
             level = int(info[6])
             if level==1:
                 ChapterName = info[0]
-                str = info[0] + "\t" + info[1] + "\t" + info[1] + "\n"
+                str = info[0] + "\t" + info[1] + "\t" + info[0] + "\n"
             elif level==2:
                 str = info[0] + "\t" + info[1] + "\t" + ChapterName + "\n"
                 ChapterName2 = info[0]

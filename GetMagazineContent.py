@@ -51,6 +51,10 @@ def get_magazine_content(file):
     for tag in soup.find_all(True):
         if tag.parent.name == 'article-info':
             continue
+        if tag.parent.name == 'figure':
+            continue
+        if tag.parent.name == 'info':
+            continue
         if tag.name in tag_allow_set:
             if tag.string is not None:
                 info = info + tag.string

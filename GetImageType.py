@@ -26,7 +26,7 @@ def get_all_image_files_from_dir(srcdir, type_set):
 
 
 def main():
-    srcdir = u"E:\\Goosuu\\JinRongSource\\第一批数据"
+    srcdir = u"I:\\Deal-Middle\\Book_Image\\期刊"
     type_set = set()
     types = get_all_image_files_from_dir(srcdir, type_set)
     for type in types:

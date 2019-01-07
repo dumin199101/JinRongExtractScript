@@ -92,7 +92,10 @@ def get_magazine_title(file):
                             continue
                         if person.find('name').string is not None:
                             person_list.append(person.find('name').string)
-                    person_info = ','.join(person_list)
+                    if len(person_list) > 0:
+                        person_info = ','.join(person_list)
+                    else:
+                        person_info = '暂无作者'
                     keywords = doc_tag.front.keywords
                     key = '暂无关键词'
                     key_list = []
@@ -104,6 +107,8 @@ def get_magazine_title(file):
                             if len(keyword.string) > 1:
                                 key_list.append(keyword.string)
                                 key = ",".join(key_list)
+                        if len(key) == 0:
+                            key = '暂无关键词'
                     keywordens = doc_tag.front.keywordEns
                     key_ens = '暂无英文关键词'
                     key_en_list = []
@@ -115,6 +120,8 @@ def get_magazine_title(file):
                             if len(keyword_en.string) > 1:
                                 key_en_list.append(keyword_en.string)
                                 key_ens = ",".join(key_en_list)
+                        if len(key_ens) == 0:
+                            key_ens = '暂无英文关键词'
                     abstract = doc_tag.front.abstract.string
                     if abstract is None:
                         abstract = '暂无'
@@ -132,22 +139,22 @@ def get_magazine_title(file):
                         issueNo = '暂无'
                     pageRange = doc_tag.content.find(role="pdfpage").string
                     pages = doc_tag.front.pages.string
-                    # print "*" * 20, bookname,id, title, subtitle, englishtitle, englishsubtitle, person_info, key, key_ens, abstract, enabstract, fund, issue, issueNo, pageRange, pages
-                    # info = bookname + "_" + id + "_" + title + "\t" + bookname + "_" + id + "\t" + bookname + "\t" + id + "\t" + title + "\t" + subtitle + "\t" + englishtitle + "\t" + englishsubtitle + "\t" + person_info + "\t" + key + "\t" + key_ens + "\t" + abstract + "\t" + enabstract + "\t" + fund + "\t" + issue + "\t" + issueNo + "\t" + pageRange + "\t" + pages + "\n"
-                    # write_mapping_log("MagazineTitle.txt", info)
+                    print "*" * 20, bookname,id, title, subtitle, englishtitle, englishsubtitle, person_info, key, key_ens, abstract, enabstract, fund, issue, issueNo, pageRange, pages
+                    info = bookname + "_" + id + "_" + title + "\t" + bookname + "_" + id + "\t" + bookname + "\t" + id + "\t" + title + "\t" + subtitle + "\t" + englishtitle + "\t" + englishsubtitle + "\t" + person_info + "\t" + key + "\t" + key_ens + "\t" + abstract + "\t" + enabstract + "\t" + fund + "\t" + issue + "\t" + issueNo + "\t" + pageRange + "\t" + pages + "\n"
+                    write_mapping_log("MagazineTitle.txt", info)
                     # 第三部分获取正文信息：
-                    content_file = doc_tag.content.file.string
-                    print content_file
-                    content = ''
-                    for tag in doc_tag.content.find_all(True):
-                        if tag.name == 'para':
-                            if tag.string is not None:
-                                content = content + tag.string
-                            else:
-                                for string in tag.strings:
-                                    content = content + string
-                    info = bookname + "_" + id + "_" + title + "\t" + bookname + "\t" + id + "\t" + title + "\t" + del_blank_char(content) + "\n"
-                    write_mapping_log("MagazineContent.txt", info)
+                    # content_file = doc_tag.content.file.string
+                    # print content_file
+                    # content = ''
+                    # for tag in doc_tag.content.find_all(True):
+                    #     if tag.name == 'para':
+                    #         if tag.string is not None:
+                    #             content = content + tag.string
+                    #         else:
+                    #             for string in tag.strings:
+                    #                 content = content + string
+                    # info = bookname + "_" + id + "_" + title + "\t" + bookname + "\t" + id + "\t" + title + "\t" + del_blank_char(content) + "\n"
+                    # write_mapping_log("MagazineContent.txt", info)
         else:
             # print "*" * 10, del_blank_char(name_tag.string)
             # 获取二级标签
@@ -180,7 +187,10 @@ def get_magazine_title(file):
                             continue
                         if person.find('name').string is not None:
                             person_list.append(person.find('name').string)
-                    person_info = ','.join(person_list)
+                    if len(person_list) > 0:
+                        person_info = ','.join(person_list)
+                    else:
+                        person_info = '暂无作者'
                     keywords = doc_tag.front.keywords
                     key = '暂无关键词'
                     key_list = []
@@ -192,6 +202,8 @@ def get_magazine_title(file):
                             if len(keyword.string) > 1:
                                 key_list.append(keyword.string)
                                 key = ",".join(key_list)
+                        if len(key) == 0:
+                            key = '暂无关键词'
                     keywordens = doc_tag.front.keywordEns
                     key_ens = '暂无英文关键词'
                     key_en_list = []
@@ -203,6 +215,8 @@ def get_magazine_title(file):
                             if len(keyword_en.string) > 1:
                                 key_en_list.append(keyword_en.string)
                                 key_ens = ",".join(key_en_list)
+                        if len(key_ens) == 0:
+                            key_ens = '暂无英文关键词'
                     abstract = doc_tag.front.abstract.string
                     if abstract is None:
                         abstract = '暂无'
@@ -220,22 +234,22 @@ def get_magazine_title(file):
                         issueNo = '暂无'
                     pageRange = doc_tag.content.find(role="pdfpage").string
                     pages = doc_tag.front.pages.string
-                    # print "*" * 30, bookname,id, title, subtitle, englishtitle, englishsubtitle, person_info, key, key_ens, abstract, enabstract, fund, issue, issueNo, pageRange, pages
-                    # info = bookname + "_" + id + "_" + title + "\t" + bookname + "_" + id + "\t" + bookname + "\t" + id + "\t" + title + "\t" + subtitle + "\t" + englishtitle + "\t" + englishsubtitle + "\t" + person_info + "\t" + key + "\t" + key_ens + "\t" + abstract + "\t" + enabstract + "\t" + fund + "\t" + issue + "\t" + issueNo + "\t" + pageRange + "\t" + pages + "\n"
-                    # write_mapping_log("MagazineTitle.txt", info)
+                    print "*" * 30, bookname,id, title, subtitle, englishtitle, englishsubtitle, person_info, key, key_ens, abstract, enabstract, fund, issue, issueNo, pageRange, pages
+                    info = bookname + "_" + id + "_" + title + "\t" + bookname + "_" + id + "\t" + bookname + "\t" + id + "\t" + title + "\t" + subtitle + "\t" + englishtitle + "\t" + englishsubtitle + "\t" + person_info + "\t" + key + "\t" + key_ens + "\t" + abstract + "\t" + enabstract + "\t" + fund + "\t" + issue + "\t" + issueNo + "\t" + pageRange + "\t" + pages + "\n"
+                    write_mapping_log("MagazineTitle.txt", info)
                     # 第三部分获取正文信息：
-                    content_file = doc_tag.content.file.string
-                    print content_file
-                    content = ''
-                    for tag in doc_tag.content.find_all(True):
-                        if tag.name == 'para':
-                            if tag.string is not None:
-                                content = content + tag.string
-                            else:
-                                for string in tag.strings:
-                                    content = content + string
-                    info = bookname+"_"+id+"_"+title+"\t"+bookname + "\t" + id + "\t" + title + "\t" + del_blank_char(content) + "\n"
-                    write_mapping_log("MagazineContent.txt",info)
+                    # content_file = doc_tag.content.file.string
+                    # print content_file
+                    # content = ''
+                    # for tag in doc_tag.content.find_all(True):
+                    #     if tag.name == 'para':
+                    #         if tag.string is not None:
+                    #             content = content + tag.string
+                    #         else:
+                    #             for string in tag.strings:
+                    #                 content = content + string
+                    # info = bookname+"_"+id+"_"+title+"\t"+bookname + "\t" + id + "\t" + title + "\t" + del_blank_char(content) + "\n"
+                    # write_mapping_log("MagazineContent.txt",info)
 
 
 def get_magazine_titles(srcdir):

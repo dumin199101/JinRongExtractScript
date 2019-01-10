@@ -53,18 +53,18 @@ def read_mapping_log(logname):
             level = int(info[6])
             if level==1:
                 ChapterName = info[0]
-                str = info[0] + "\t" + info[1] + "\t" + info[0] + "\n"
+                str = info[1]+"_"+info[5]+"_"+info[0] + "\t" + info[0] + "\t" + info[1] + "\t" + info[0] + "\n"
             elif level==2:
-                str = info[0] + "\t" + info[1] + "\t" + ChapterName + "\n"
+                str = info[1]+"_"+info[5]+"_"+info[0] + "\t" + info[0] + "\t" + info[1] + "\t" + ChapterName + "\n"
                 ChapterName2 = info[0]
             elif level==3:
-                str = info[0] +  "\t" + info[1] + "\t" +ChapterName2 + "\n"
+                str = info[1]+"_"+info[5]+"_"+info[0] + "\t" + info[0] +  "\t" + info[1] + "\t" +ChapterName2 + "\n"
                 ChapterName3 = info[0]
             elif level==4:
-                str = info[0] + "\t" + info[1] + "\t" +ChapterName3 + "\n"
+                str = info[1]+"_"+info[5]+"_"+info[0] + "\t" + info[0] + "\t" + info[1] + "\t" +ChapterName3 + "\n"
                 ChapterName4 = info[0]
             elif level==5:
-                str = info[0] + "\t" + info[1] + "\t" + ChapterName4 + "\n"
+                str = info[1]+"_"+info[5]+"_"+info[0] + "\t" + info[0] + "\t" + info[1] + "\t" + ChapterName4 + "\n"
             # print str
             write_mapping_log("MULU_Level_File.txt",str)
 

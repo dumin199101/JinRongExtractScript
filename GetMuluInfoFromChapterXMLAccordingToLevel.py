@@ -36,10 +36,12 @@ def get_title_info(file):
 
     soup = BeautifulSoup(open(file.encode("gbk")), features='xml')
 
+
     # 声明一个集合统计标签种类：创建空集合必须使用set函数，非空集合可以使用{}
     tag_set = set()
     for tag in soup.find_all(True):
         tag_set.add(tag.name)
+
 
 
     title = None
@@ -118,16 +120,8 @@ def get_title_info(file):
                 break
         pdfpage = soup.select('chapter > info > pagenums[role="pdfpage"]')[0].string
 
-    elif len(chapter) > 1:
-        chapters = soup.select('chapter')
-        for chapt in chapters:
-            (chapt_level, chapt_title, chapt_pdfpage) = get_chapt_info(chapt)
-            # 统计目录层级
-            count = chapt_level.count("-")
-            # print chapt_title, bookname, name + "#" + chapt_level, name, chapt_level, chapt_level[7:], str(count + 1), chapt_pdfpage
-            strs = chapt_title + "\t" + bookname + "\t" + name + "#" + chapt_level + "\t" + name + "\t" + chapt_level + "\t" + chapt_level[7:] + "\t" + str(count + 1) + "\t" + chapt_pdfpage + "\n"
-            write_mapping_log("parseMuluXMLFromChapterXML.txt", strs)
-            print bookname + "_" + chapt_title
+
+
     elif len(bibliography) > 0:
         # 从info标签中获取基本信息
         level = bibliography[0].blockquote.find('title').get('xml:id')
@@ -213,111 +207,236 @@ def get_title_info(file):
         print bookname + "_" + title
 
 
-    # 处理二级标签、三级标签、四级标签
-    if 'sect1' in tag_set:
-        sect1s = soup.select('sect1')
-        for sect1 in sect1s:
-            xmlid = sect1.find('title').get('xml:id')
-            if xmlid.rfind(".") > -1:
-                sect1_level = xmlid[:xmlid.rfind(".")]
-            else:
-                sect1_level = xmlid
-            sect1_title = sect1.select('info > title')[0].string
-            if sect1_title is None:
-                for string in sect1.select('info > title')[0].strings:
-                    sect1_title = string
-                    break
-            sect1_pdfpage = sect1.select('info > pagenums[role="pdfpage"]')[0].string
+
+    if len(chapter) > 1:
+        chapters = soup.select('chapter')
+        for chapt in chapters:
+            (chapt_level, chapt_title, chapt_pdfpage) = get_chapt_info(chapt)
             # 统计目录层级
-            count = sect1_level.count("-")
-            # print sect1_title, bookname, name + "#" + sect1_level, name, sect1_level, sect1_level[7:], str(
-            #     count + 1), sect1_pdfpage
-            strs = sect1_title + "\t" + bookname + "\t" + name + "#" + sect1_level + "\t" + name + "\t" + sect1_level + "\t" + sect1_level[
-                                                                                                             7:] + "\t" + str(
-                count + 1) + "\t" + sect1_pdfpage + "\n"
+            count = chapt_level.count("-")
+            # print chapt_title, bookname, name + "#" + chapt_level, name, chapt_level, chapt_level[7:], str(count + 1), chapt_pdfpage
+            strs = chapt_title + "\t" + bookname + "\t" + name + "#" + chapt_level + "\t" + name + "\t" + chapt_level + "\t" + chapt_level[
+                                                                                                                               7:] + "\t" + str(
+                count + 1) + "\t" + chapt_pdfpage + "\n"
             write_mapping_log("parseMuluXMLFromChapterXML.txt", strs)
-            print bookname + "_" + sect1_title
-            tag_set_1 = set()
-            for tag in sect1.find_all(True):
-                tag_set_1.add(tag.name)
-            # 提取三级标签
-            if 'sect2' in tag_set_1:
-                sect2s = sect1.select('sect2')
-                for sect2 in sect2s:
-                    xmlid = sect2.find('title').get('xml:id')
+            print bookname + "_" + chapt_title
+
+            tag_set_chapter = set()
+            for tag in chapt.find_all(True):
+                tag_set_chapter.add(tag.name)
+
+
+            # 处理二级标签、三级标签、四级标签
+            if 'sect1' in tag_set_chapter:
+                sect1s = chapt.select('sect1')
+                for sect1 in sect1s:
+                    xmlid = sect1.find('title').get('xml:id')
                     if xmlid.rfind(".") > -1:
-                        sect2_level = xmlid[:xmlid.rfind(".")]
+                        sect1_level = xmlid[:xmlid.rfind(".")]
                     else:
-                        sect2_level = xmlid
-                    sect2_title = sect2.select('info > title')[0].string
-                    if sect2_title is None:
-                        for string in sect2.select('info > title')[0].strings:
-                            sect2_title = string
+                        sect1_level = xmlid
+                    sect1_title = sect1.select('info > title')[0].string
+                    if sect1_title is None:
+                        for string in sect1.select('info > title')[0].strings:
+                            sect1_title = string
                             break
-                    sect2_pdfpage = sect2.select('info > pagenums[role="pdfpage"]')[0].string
+                    sect1_pdfpage = sect1.select('info > pagenums[role="pdfpage"]')[0].string
                     # 统计目录层级
-                    count = sect2_level.count("-")
-                    # print sect2_title, bookname, name + "#" + sect2_level, name, sect2_level, sect2_level[7:], str(
-                    #     count + 1), sect2_pdfpage
-                    strs = sect2_title + "\t" + bookname + "\t" + name + "#" + sect2_level + "\t" + name + "\t" + sect2_level + "\t" + sect2_level[
-                                                                                                                                       7:] + "\t" + str(
-                        count + 1) + "\t" + sect2_pdfpage + "\n"
+                    count = sect1_level.count("-")
+                    # print sect1_title, bookname, name + "#" + sect1_level, name, sect1_level, sect1_level[7:], str(
+                    #     count + 1), sect1_pdfpage
+                    strs = sect1_title + "\t" + bookname + "\t" + name + "#" + sect1_level + "\t" + name + "\t" + sect1_level + "\t" + sect1_level[
+                                                                                                                     7:] + "\t" + str(
+                        count + 1) + "\t" + sect1_pdfpage + "\n"
                     write_mapping_log("parseMuluXMLFromChapterXML.txt", strs)
-                    print bookname + "_" + sect2_title
-                    tag_set_2 = set()
-                    for tag in sect2.find_all(True):
-                        tag_set_2.add(tag.name)
-                    # 提取四级标签
-                    if 'sect3' in tag_set_2:
-                        sect3s = sect2.select('sect3')
-                        for sect3 in sect3s:
-                            xmlid = sect3.find('title').get('xml:id')
+                    print bookname + "_" + sect1_title
+                    tag_set_1 = set()
+                    for tag in sect1.find_all(True):
+                        tag_set_1.add(tag.name)
+                    # 提取三级标签
+                    if 'sect2' in tag_set_1:
+                        sect2s = sect1.select('sect2')
+                        for sect2 in sect2s:
+                            xmlid = sect2.find('title').get('xml:id')
                             if xmlid.rfind(".") > -1:
-                                sect3_level = xmlid[:xmlid.rfind(".")]
+                                sect2_level = xmlid[:xmlid.rfind(".")]
                             else:
-                                sect3_level = xmlid
-                            sect3_title = sect3.select('info > title')[0].string
-                            if sect3_title is None:
-                                for string in sect3.select('info > title')[0].strings:
-                                    sect3_title = string
+                                sect2_level = xmlid
+                            sect2_title = sect2.select('info > title')[0].string
+                            if sect2_title is None:
+                                for string in sect2.select('info > title')[0].strings:
+                                    sect2_title = string
                                     break
-                            sect3_pdfpage = sect3.select('info > pagenums[role="pdfpage"]')[0].string
+                            sect2_pdfpage = sect2.select('info > pagenums[role="pdfpage"]')[0].string
                             # 统计目录层级
-                            count = sect3_level.count("-")
-                            # print sect3_title, bookname, name + "#" + sect3_level, name, sect3_level, sect3_level[7:], str(
-                            #     count + 1), sect3_pdfpage
-                            strs = sect3_title + "\t" + bookname + "\t" + name + "#" + sect3_level + "\t" + name + "\t" + sect3_level + "\t" + sect3_level[
+                            count = sect2_level.count("-")
+                            # print sect2_title, bookname, name + "#" + sect2_level, name, sect2_level, sect2_level[7:], str(
+                            #     count + 1), sect2_pdfpage
+                            strs = sect2_title + "\t" + bookname + "\t" + name + "#" + sect2_level + "\t" + name + "\t" + sect2_level + "\t" + sect2_level[
                                                                                                                                                7:] + "\t" + str(
-                                count + 1) + "\t" + sect3_pdfpage + "\n"
+                                count + 1) + "\t" + sect2_pdfpage + "\n"
                             write_mapping_log("parseMuluXMLFromChapterXML.txt", strs)
-                            print bookname + "_" + sect3_title
-                            tag_set_3 = set()
-                            for tag in sect3.find_all(True):
-                                tag_set_3.add(tag.name)
-                            # 提取五级标签
-                            if 'sect4' in tag_set_3:
-                                sect4s = sect3.select('sect4')
-                                for sect4 in sect4s:
-                                    xmlid = sect4.find('title').get('xml:id')
+                            print bookname + "_" + sect2_title
+                            tag_set_2 = set()
+                            for tag in sect2.find_all(True):
+                                tag_set_2.add(tag.name)
+                            # 提取四级标签
+                            if 'sect3' in tag_set_2:
+                                sect3s = sect2.select('sect3')
+                                for sect3 in sect3s:
+                                    xmlid = sect3.find('title').get('xml:id')
                                     if xmlid.rfind(".") > -1:
-                                        sect4_level = xmlid[:xmlid.rfind(".")]
+                                        sect3_level = xmlid[:xmlid.rfind(".")]
                                     else:
-                                        sect4_level = xmlid
-                                    sect4_title = sect4.select('info > title')[0].string
-                                    if sect4_title is None:
-                                        for string in sect4.select('info > title')[0].strings:
-                                            sect4_title = string
+                                        sect3_level = xmlid
+                                    sect3_title = sect3.select('info > title')[0].string
+                                    if sect3_title is None:
+                                        for string in sect3.select('info > title')[0].strings:
+                                            sect3_title = string
                                             break
-                                    sect4_pdfpage = sect4.select('info > pagenums[role="pdfpage"]')[0].string
+                                    sect3_pdfpage = sect3.select('info > pagenums[role="pdfpage"]')[0].string
                                     # 统计目录层级
-                                    count = sect4_level.count("-")
-                                    # print sect4_title, bookname, name + "#" + sect4_level, name, sect4_level, sect4_level[7:], str(
-                                    #     count + 1), sect4_pdfpage
-                                    strs = sect4_title + "\t" + bookname + "\t" + name + "#" + sect4_level + "\t" + name + "\t" + sect4_level + "\t" + sect4_level[
+                                    count = sect3_level.count("-")
+                                    # print sect3_title, bookname, name + "#" + sect3_level, name, sect3_level, sect3_level[7:], str(
+                                    #     count + 1), sect3_pdfpage
+                                    strs = sect3_title + "\t" + bookname + "\t" + name + "#" + sect3_level + "\t" + name + "\t" + sect3_level + "\t" + sect3_level[
                                                                                                                                                        7:] + "\t" + str(
-                                        count + 1) + "\t" + sect4_pdfpage + "\n"
+                                        count + 1) + "\t" + sect3_pdfpage + "\n"
                                     write_mapping_log("parseMuluXMLFromChapterXML.txt", strs)
-                                    print bookname + "_" + sect4_title
+                                    print bookname + "_" + sect3_title
+                                    tag_set_3 = set()
+                                    for tag in sect3.find_all(True):
+                                        tag_set_3.add(tag.name)
+                                    # 提取五级标签
+                                    if 'sect4' in tag_set_3:
+                                        sect4s = sect3.select('sect4')
+                                        for sect4 in sect4s:
+                                            xmlid = sect4.find('title').get('xml:id')
+                                            if xmlid.rfind(".") > -1:
+                                                sect4_level = xmlid[:xmlid.rfind(".")]
+                                            else:
+                                                sect4_level = xmlid
+                                            sect4_title = sect4.select('info > title')[0].string
+                                            if sect4_title is None:
+                                                for string in sect4.select('info > title')[0].strings:
+                                                    sect4_title = string
+                                                    break
+                                            sect4_pdfpage = sect4.select('info > pagenums[role="pdfpage"]')[0].string
+                                            # 统计目录层级
+                                            count = sect4_level.count("-")
+                                            # print sect4_title, bookname, name + "#" + sect4_level, name, sect4_level, sect4_level[7:], str(
+                                            #     count + 1), sect4_pdfpage
+                                            strs = sect4_title + "\t" + bookname + "\t" + name + "#" + sect4_level + "\t" + name + "\t" + sect4_level + "\t" + sect4_level[
+                                                                                                                                                               7:] + "\t" + str(
+                                                count + 1) + "\t" + sect4_pdfpage + "\n"
+                                            write_mapping_log("parseMuluXMLFromChapterXML.txt", strs)
+                                            print bookname + "_" + sect4_title
+    else:
+        # 处理二级标签、三级标签、四级标签
+        if 'sect1' in tag_set:
+            sect1s = soup.select('sect1')
+            for sect1 in sect1s:
+                xmlid = sect1.find('title').get('xml:id')
+                if xmlid.rfind(".") > -1:
+                    sect1_level = xmlid[:xmlid.rfind(".")]
+                else:
+                    sect1_level = xmlid
+                sect1_title = sect1.select('info > title')[0].string
+                if sect1_title is None:
+                    for string in sect1.select('info > title')[0].strings:
+                        sect1_title = string
+                        break
+                sect1_pdfpage = sect1.select('info > pagenums[role="pdfpage"]')[0].string
+                # 统计目录层级
+                count = sect1_level.count("-")
+                # print sect1_title, bookname, name + "#" + sect1_level, name, sect1_level, sect1_level[7:], str(
+                #     count + 1), sect1_pdfpage
+                strs = sect1_title + "\t" + bookname + "\t" + name + "#" + sect1_level + "\t" + name + "\t" + sect1_level + "\t" + sect1_level[
+                                                                                                                                   7:] + "\t" + str(
+                    count + 1) + "\t" + sect1_pdfpage + "\n"
+                write_mapping_log("parseMuluXMLFromChapterXML.txt", strs)
+                print bookname + "_" + sect1_title
+                tag_set_1 = set()
+                for tag in sect1.find_all(True):
+                    tag_set_1.add(tag.name)
+                # 提取三级标签
+                if 'sect2' in tag_set_1:
+                    sect2s = sect1.select('sect2')
+                    for sect2 in sect2s:
+                        xmlid = sect2.find('title').get('xml:id')
+                        if xmlid.rfind(".") > -1:
+                            sect2_level = xmlid[:xmlid.rfind(".")]
+                        else:
+                            sect2_level = xmlid
+                        sect2_title = sect2.select('info > title')[0].string
+                        if sect2_title is None:
+                            for string in sect2.select('info > title')[0].strings:
+                                sect2_title = string
+                                break
+                        sect2_pdfpage = sect2.select('info > pagenums[role="pdfpage"]')[0].string
+                        # 统计目录层级
+                        count = sect2_level.count("-")
+                        # print sect2_title, bookname, name + "#" + sect2_level, name, sect2_level, sect2_level[7:], str(
+                        #     count + 1), sect2_pdfpage
+                        strs = sect2_title + "\t" + bookname + "\t" + name + "#" + sect2_level + "\t" + name + "\t" + sect2_level + "\t" + sect2_level[
+                                                                                                                                           7:] + "\t" + str(
+                            count + 1) + "\t" + sect2_pdfpage + "\n"
+                        write_mapping_log("parseMuluXMLFromChapterXML.txt", strs)
+                        print bookname + "_" + sect2_title
+                        tag_set_2 = set()
+                        for tag in sect2.find_all(True):
+                            tag_set_2.add(tag.name)
+                        # 提取四级标签
+                        if 'sect3' in tag_set_2:
+                            sect3s = sect2.select('sect3')
+                            for sect3 in sect3s:
+                                xmlid = sect3.find('title').get('xml:id')
+                                if xmlid.rfind(".") > -1:
+                                    sect3_level = xmlid[:xmlid.rfind(".")]
+                                else:
+                                    sect3_level = xmlid
+                                sect3_title = sect3.select('info > title')[0].string
+                                if sect3_title is None:
+                                    for string in sect3.select('info > title')[0].strings:
+                                        sect3_title = string
+                                        break
+                                sect3_pdfpage = sect3.select('info > pagenums[role="pdfpage"]')[0].string
+                                # 统计目录层级
+                                count = sect3_level.count("-")
+                                # print sect3_title, bookname, name + "#" + sect3_level, name, sect3_level, sect3_level[7:], str(
+                                #     count + 1), sect3_pdfpage
+                                strs = sect3_title + "\t" + bookname + "\t" + name + "#" + sect3_level + "\t" + name + "\t" + sect3_level + "\t" + sect3_level[
+                                                                                                                                                   7:] + "\t" + str(
+                                    count + 1) + "\t" + sect3_pdfpage + "\n"
+                                write_mapping_log("parseMuluXMLFromChapterXML.txt", strs)
+                                print bookname + "_" + sect3_title
+                                tag_set_3 = set()
+                                for tag in sect3.find_all(True):
+                                    tag_set_3.add(tag.name)
+                                # 提取五级标签
+                                if 'sect4' in tag_set_3:
+                                    sect4s = sect3.select('sect4')
+                                    for sect4 in sect4s:
+                                        xmlid = sect4.find('title').get('xml:id')
+                                        if xmlid.rfind(".") > -1:
+                                            sect4_level = xmlid[:xmlid.rfind(".")]
+                                        else:
+                                            sect4_level = xmlid
+                                        sect4_title = sect4.select('info > title')[0].string
+                                        if sect4_title is None:
+                                            for string in sect4.select('info > title')[0].strings:
+                                                sect4_title = string
+                                                break
+                                        sect4_pdfpage = sect4.select('info > pagenums[role="pdfpage"]')[0].string
+                                        # 统计目录层级
+                                        count = sect4_level.count("-")
+                                        # print sect4_title, bookname, name + "#" + sect4_level, name, sect4_level, sect4_level[7:], str(
+                                        #     count + 1), sect4_pdfpage
+                                        strs = sect4_title + "\t" + bookname + "\t" + name + "#" + sect4_level + "\t" + name + "\t" + sect4_level + "\t" + sect4_level[
+                                                                                                                                                           7:] + "\t" + str(
+                                            count + 1) + "\t" + sect4_pdfpage + "\n"
+                                        write_mapping_log("parseMuluXMLFromChapterXML.txt", strs)
+                                        print bookname + "_" + sect4_title
 
 
 

@@ -1,13 +1,11 @@
 # coding=utf-8
 """
 @Project: JinRong
-@Time: 2019/1/11 9:55
-@Name: GetMagazineCatalog
+@Time: 2019/2/14 10:42
+@Name: GetMagazineColumnMapping
 @Author: lieyan123091
 """
 # coding=utf-8
-
-
 import os
 import sys
 from bs4 import BeautifulSoup
@@ -68,12 +66,13 @@ def get_magazine_catalog(file):
                     # i = i + 1
 
                     # ①获取栏目
-                    write_mapping_log("Magazine_Catalog_Mapping.txt", cat_name + "\t" + cat_name + "_" + del_blank_char(
-                        magazinecolumn_tag.find('name').string) + "\t" + bookname + "\t" + str(
-                        1) + "\t" + "顶级栏目" + "\t" + del_blank_char(magazinecolumn_tag.find('name').string) + "\n")
+                    # write_mapping_log("Magazine_Catalog_Mapping.txt", cat_name + "\t" + cat_name + "_" + del_blank_char(
+                    #     magazinecolumn_tag.find('name').string) + "\t" + bookname + "\t" + str(
+                    #     1) + "\t" + "顶级栏目" + "\t" + del_blank_char(magazinecolumn_tag.find('name').string) + "\n")
 
                     # ②获取目录结构
                     # write_mapping_log("MagazineCatalog.txt",cat_name+"\t"+ "*-*" + "\t" + del_blank_char(magazinecolumn_tag.find('name').string)+"\t"+str(1)+"\t"+bookname+"\t"+year+"\t"+order+"\t"+"*-*"+"\n")
+
 
                     # 获取二级标签
                     docs_tag = magazinecolumn_tag.docs.find_all('doc')
@@ -90,6 +89,10 @@ def get_magazine_catalog(file):
                         # ② 获取目录结构
                         # write_mapping_log("MagazineCatalog.txt", cat_name + "\t" + id + "\t" + title + "\t" + str(
                         #     2) + "\t" + bookname + "\t" + year + "\t" + order + "\t" + pageRange + "\n")
+
+                        # ③获取栏目-标题映射关系
+                        write_mapping_log("MagazineColumnMappingRefer.txt", cat_name + "_" + del_blank_char(
+                            magazinecolumn_tag.find('name').string) + "\t" + bookname + "_" + id + "_" + title  + "\n")
                 else:
                     # 一级标签为None
                     # 获取二级标签
@@ -108,15 +111,18 @@ def get_magazine_catalog(file):
                         # write_mapping_log("MagazineCatalog.txt", cat_name + "\t" + id + "\t" + title + "\t" + str(
                         #     2) + "\t" + bookname + "\t" + year + "\t" + order + "\t" + pageRange + "\n")
 
+                        # ③获取栏目-标题映射关系
+                        write_mapping_log("MagazineColumnMappingRefer.txt", cat_name + "_" + '暂无栏目'+ "\t" + bookname + "_" + id + "_" + title + "\n")
+
 
 
         else:
             # print "*" * 10, name_tag.string
             # i = i + 1
             # ①获取栏目
-            write_mapping_log("Magazine_Catalog_Mapping.txt",
-                              cat_name + "\t" + cat_name + "_" + name_tag.string + "\t" +
-                              bookname + "\t" + str(1) + "\t" + "顶级栏目" + "\t" + name_tag.string + "\n")
+            # write_mapping_log("Magazine_Catalog_Mapping.txt",
+            #                   cat_name + "\t" + cat_name + "_" + name_tag.string + "\t" +
+            #                   bookname + "\t" + str(1) + "\t" + "顶级栏目" + "\t" + name_tag.string + "\n")
 
             # ②获取目录结构
             # write_mapping_log("MagazineCatalog.txt", cat_name + "\t" + "*-*" + "\t" + name_tag.string + "\t" + str(
@@ -129,17 +135,16 @@ def get_magazine_catalog(file):
                     # print "*" * 20, magazinecolumn_tag.find('name').string
                     # i = i + 1
                     # ①获取栏目
-                    write_mapping_log("Magazine_Catalog_Mapping.txt",
-                                      cat_name + "\t" + cat_name + "_" + del_blank_char(
-                                          magazinecolumn_tag.find('name').string) + "\t" +
-                                      bookname + "\t" + str(2) + "\t" + cat_name+"_"+name_tag.string + "\t" + del_blank_char(
-                                          magazinecolumn_tag.find('name').string) + "\n")
+                    # write_mapping_log("Magazine_Catalog_Mapping.txt",
+                    #                   cat_name + "\t" + cat_name + "_" + del_blank_char(
+                    #                       magazinecolumn_tag.find('name').string) + "\t" +
+                    #                   bookname + "\t" + str(2) + "\t" + name_tag.string + "\t" + del_blank_char(
+                    #                       magazinecolumn_tag.find('name').string) + "\n")
 
                     # ②获取目录结构
                     # write_mapping_log("MagazineCatalog.txt", cat_name + "\t" + "*-*" + "\t" + del_blank_char(
                     #                       magazinecolumn_tag.find('name').string) + "\t" + str(
                     #     2) + "\t" + bookname + "\t" + year + "\t" + order + "\t" + "*-*" + "\n")
-
 
 
                     # 获取三级标签
@@ -156,6 +161,12 @@ def get_magazine_catalog(file):
                         #②获取目录结构
                         # write_mapping_log("MagazineCatalog.txt", cat_name + "\t" + id + "\t" + title + "\t" + str(
                         #     3) + "\t" + bookname + "\t" + year + "\t" + order + "\t" + pageRange + "\n")
+
+                        # ③获取栏目-标题映射关系
+                        write_mapping_log("MagazineColumnMappingRefer.txt", cat_name + "_" + del_blank_char(
+                            magazinecolumn_tag.find(
+                                'name').string) + "\t"  + bookname + "_" + id + "_" + title + "\n")
+
                 else:
                     # 二级标签为None的情况
                     # 获取三级标签
@@ -173,6 +184,9 @@ def get_magazine_catalog(file):
                         # write_mapping_log("MagazineCatalog.txt", cat_name + "\t" + id + "\t" + title + "\t" + str(
                         #     3) + "\t" + bookname + "\t" + year + "\t" + order + "\t" + pageRange + "\n")
 
+                        # ③获取栏目-标题映射关系
+                        write_mapping_log("MagazineColumnMappingRefer.txt", cat_name + "_" + "暂无栏目" + "\t"  + bookname + "_" + id + "_" + title + "\n")
+
 
 
 
@@ -186,7 +200,6 @@ def get_magazine_catalogs(srcdir):
 
 def main():
     srcdir = u"J:\\Deal-Middle\\期刊数据\\EXTRACTCDATAXML"
-    # srcdir = u"E:\\Goosuu\\JinRong\\Script\\Test\\magazine3"
     get_magazine_catalogs(srcdir)
 
 

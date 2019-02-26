@@ -4,14 +4,13 @@ import sys
 import re
 from pyPdf import PdfFileWriter, PdfFileReader
 
-ROOTDIR = os.path.dirname(os.path.abspath(sys.argv[0]))
-SCRIPTDIR = "E:\\Goosuu\\JinRong\\Script"
-RESULTDIR = SCRIPTDIR + "\\Result"
+SCRIPTDIR = "E:\\Goosuu\\Deal-Middle"
+
 
 # 配置数据
-foldername = "第一批数据"
-PDFDIR = RESULTDIR + "\\" + foldername + "\\"
-PRODUCTDIR = SCRIPTDIR + "\\Product\\" + foldername + "\\"
+foldername = "第二批数据"
+PDFDIR = SCRIPTDIR + "\\PDF\\" + foldername + "\\"
+PRODUCTDIR = SCRIPTDIR + "\\ExtractPDF\\" + foldername + "\\"
 
 
 def write_mapping_log(logname, content):
@@ -81,17 +80,30 @@ def gen_files(logname):
     with open(logname, "r") as f1:
         regex_tab = re.compile("\\t")
         # 配置数据，读取上一次的最大值
+        i = 1
         while True:
             line = f1.readline().decode("utf-8")
             if len(line) < 1:
                 break
+            if i <= 12687:
+                i = i + 1
+                continue
+            if i > 25463:
+                break
             info = regex_tab.split(line)
             # 切分数据
-            genfile((PDFDIR + (info[1])).decode("utf-8").encode("gbk") + '.pdf',
-                    PRODUCTDIR + info[5] + "\\" + info[4]
+            genfile((PDFDIR + (info[2])).decode("utf-8").encode("gbk") + '.pdf',
+                    PRODUCTDIR + info[2] + "\\" + info[0]
                     + '.pdf',
-                    int(info[2]), int(info[3]))
-            print info[0] + " Gernerate Success..."
+                    int(info[5]), int(info[6]))
+            print i,info[7].strip("\n") + " Gernerate Success..."
+            i = i + 1
+            # 处理第一批
+            # genfile((PDFDIR + (info[3])).decode("utf-8").encode("gbk") + '.pdf',
+            #         PRODUCTDIR + info[3] + "\\" + info[0]
+            #         + '.pdf',
+            #         int(info[6]), int(info[7]))
+            # print info[1].strip("\n") + " Gernerate Success..."
 
 
 
@@ -101,7 +113,7 @@ def extract_files():
     :return:
     """
     # 配置数据
-    gen_files("Page_Offset_File.txt")
+    gen_files("tb_pageoffset_relationkey_2_GUID.txt")
 
 
 def main():

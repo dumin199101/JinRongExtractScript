@@ -14,7 +14,8 @@ i = 1
 
 def rename_cover(srcdir):
     global i
-    with open(u"Txt/GUID/tb_book_info_GUID.txt", "r") as f1:
+    # with open(u"Txt/GUID/tb_book_info_GUID.txt", "r") as f1:
+    with open(u"tb_magazine_info.txt", "r") as f1:
         while True:
             line = f1.readline()
             if len(line) < 1:
@@ -23,11 +24,20 @@ def rename_cover(srcdir):
             guid = info[0]
             name = info[1].strip("\n")
             for filename in os.listdir(srcdir):
-                if filename==(name+".jpg"):
+                # ①重命名封面
+                # if filename==(name+".jpg"):
+                #     srcfile = srcdir + "\\" + filename
+                #     desfile = srcdir + "\\" + guid + ".jpg"
+                #     os.rename(srcfile,desfile)
+                #     print i,srcfile,desfile
+                #     i = i + 1
+                #     continue
+                # ②重命名切分PDF,重命名Flash,重命名Images
+                if filename == name:
                     srcfile = srcdir + "\\" + filename
-                    desfile = srcdir + "\\" + guid + ".jpg"
-                    os.rename(srcfile,desfile)
-                    print i,srcfile,desfile
+                    desfile = srcdir + "\\" + guid
+                    os.rename(srcfile, desfile)
+                    print i, srcfile, desfile
                     i = i + 1
                     continue
 
@@ -41,7 +51,10 @@ def rename_cover(srcdir):
 
 
 def main():
-    srcdir = u"I:\\Covers"
+    # srcdir = u"J:\\Finish\\期刊数据\\Covers"
+    # srcdir = u"J:\\Finish\\期刊数据\\ExtractPDF"
+    # srcdir = u"J:\\Finish\\期刊数据\\Flash"
+    srcdir = u"J:\\Finish\\期刊数据\\Images"
     rename_cover(srcdir)
 
 

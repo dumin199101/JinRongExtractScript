@@ -176,9 +176,9 @@ def main():
     # prefix = 'literature'
     # srcfile = u"report_title_info_guid.txt"
     # prefix = 'report'
-    srcfile = u"edu_title_info_guid.txt"
-    prefix = 'edu'
-    create_get_zhuanti_mulu_level_sql(srcfile,prefix)
+    # srcfile = u"edu_title_info_guid.txt"
+    # prefix = 'edu'
+    # create_get_zhuanti_mulu_level_sql(srcfile,prefix)
 
 
 if __name__ == '__main__':

@@ -164,16 +164,17 @@ def get_word_list(link,total,name):
                 dt_id = re_digit.search(dt_href).group()
                 # print "*" * 20, dt_id, dt_name, dt_href
                 # 获取摘要
-                # dd_list = dl.find_all("dd",class_="gray")
-                # dd_abstract = dd_list[1]
-                # for string in dd_abstract.stripped_strings:
-                #     if string.find('[阅读全文:]') < 0:
-                #         abstract = del_blank_char(string)[3:].replace("&nbsp;","").replace("　","")
+                dd_list = dl.find_all("dd",class_="gray")
+                dd_abstract = dd_list[1]
+                for string in dd_abstract.stripped_strings:
+                    if string.find('[阅读全文:]') < 0:
+                        abstract = del_blank_char(string)[3:].replace("&nbsp;","").replace("　","")
                 if dt_name is not None:
                     # 排除乱码情况
-                    write_mapping_log("Baike_Words.txt",dt_id+"\t"+dt_name+"\t"+dt_href+"\t"+name+"\t"+str(i)+"\t"+link+"\n")
+                    write_mapping_log("Baike_Words.txt",dt_href+"_"+link+"\t"+dt_id+"\t"+dt_name+"\t"+dt_href+"\t"+abstract + "\t" + name+"\t"+str(i)+"\t"+link+"\n")
                     print j,dt_id, dt_name, dt_href,name
                 j = j + 1
+            response.close()
 
 
 

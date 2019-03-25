@@ -65,17 +65,54 @@ def select_info(srcfile,prefix):
             write_mapping_log(prefix + "_title_content.sql", sql + "\n")
 
 
+def get_zhuanti_book(srcfile,prefix):
+    global i
+    with open(srcfile, "r") as f1:
+        while True:
+            line = f1.readline()
+            if len(line) < 1:
+                break
+            info = regex_tab.split(line)
+            sql = 'INSERT INTO `'+prefix+'_book_info`(`v_book_guid`,`v_book_name`,`n_startpage`,`n_endpage`,`n_pubdate`,`v_tag`,`v_category`,`v_industry`,`v_organization`,`v_unit`,`v_pubdate`,`v_timeliness`,`v_level`,`v_word`,`v_matetime`,`v_link`) VALUES (\"%s\",\"%s\",\"%s\",\"%s\",\"%s\",\"%s\",\"%s\",\"%s\",\"%s\",\"%s\",\"%s\",\"%s\",\"%s\",\"%s\",\"%s\",\"%s\");'
+            sql = sql % (info[0], info[1], info[2], info[3],info[14],info[4],info[5],info[6],info[7],info[8],info[9],info[10],info[11],info[12],info[13],info[15].strip("\n"))
+            print i,sql
+            i = i + 1
+            write_mapping_log(prefix + "_book_info.sql", sql + "\n")
+
+
+def get_book_content(srcfile,prefix):
+    global i
+    with open(srcfile, "r") as f1:
+        while True:
+            line = f1.readline()
+            if len(line) < 1:
+                break
+            info = regex_tab.split(line)
+            sql = 'UPDATE `' + prefix + '_book_info` AS a set a.v_content = \"%s\" where a.v_book_name = \"%s\";'
+            sql = sql % (info[1],info[0])
+            print i, sql
+            i = i + 1
+            write_mapping_log(prefix + "_book_content.sql", sql + "\n")
+
+
 def main():
     # srcfile = "law_title.txt"
     # prefix = 'law'
     # get_zhuanti_book_info(srcfile,prefix)
 
 
-    srcfile = "law_title_old.txt"
-    # update_info(srcfile)
-    prefix = "law"
-    select_info(srcfile,prefix)
+    # srcfile = "law_title_old.txt"
+    # # update_info(srcfile)
+    # prefix = "law"
+    # select_info(srcfile,prefix)
 
+    # srcfile = "law_book_info_guid.txt"
+    # prefix = 'law'
+    # get_zhuanti_book(srcfile,prefix)
+
+    srcfile = "Law_Book.txt"
+    prefix = 'law'
+    get_book_content(srcfile,prefix)
 
 
 if __name__ == '__main__':

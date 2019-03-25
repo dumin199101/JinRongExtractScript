@@ -79,15 +79,71 @@ def get_info(srcfile):
             i = i + 1
 
 
-
+def get_book_info(srcfile):
+    global i
+    with open(srcfile, "r") as f1:
+        while True:
+            line = f1.readline()
+            if len(line) < 1:
+                break
+            info = regex_tab.split(line)
+            # print i,len(info)
+            # i = i + 1
+            guid = info[0]
+            book = info[1]
+            hangye = info[6]
+            jigou = info[7]
+            shishi = info[8]
+            pubdate = info[9]
+            shishidate = info[13]
+            link = info[14].strip("\n")
+            # 行业信息
+            hangye_info = regex_blank.split(hangye)
+            if len(hangye_info) > 1:
+                hangye_list = []
+                for str in hangye_info:
+                    hangye_list.append(str)
+                hangye_info = ",".join(hangye_list)
+            else:
+                hangye_info = hangye
+            #机构信息
+            jigou_info = regex_blank.split(jigou)
+            if len(jigou_info) > 1:
+                jigou_list = []
+                for str in jigou_info:
+                    jigou_list.append(str)
+                jigou_info = ",".join(jigou_list)
+            else:
+                jigou_info = jigou
+                # print guid,jigou_info
+            # 实施单位
+            shishi_info = regex_blank.split(shishi)
+            if len(shishi_info) > 1:
+                shishi_list = []
+                for str in shishi_info:
+                    shishi_list.append(str)
+                shishi_info = ",".join(shishi_list)
+            else:
+                shishi_info = shishi
+                # print guid, shishi_info
+            # 发布时间
+            pubyear = pubdate[:4]
+            pubdate = pubdate.replace("/","-")
+            pubdate = time.strftime("%Y-%m-%d", time.localtime(time.mktime(time.strptime(pubdate, "%Y-%m-%d"))))
+            # 实施时间
+            shishidate = shishidate.replace("/", "-")
+            shishidate = time.strftime("%Y-%m-%d", time.localtime(time.mktime(time.strptime(shishidate, "%Y-%m-%d"))))
+            write_mapping_log("law_book_info_guid.txt",guid+"\t"+book+"\t"+info[2]+"\t"+info[3]+"\t"+info[4]+"\t"+info[5]+"\t"+hangye_info+"\t"+jigou_info+"\t"+shishi_info+"\t"+pubdate+"\t"+info[10]+"\t"+info[11]+"\t"+info[12]+"\t"+shishidate+"\t"+pubyear+"\t"+link+"\n")
+            print i,guid
+            i = i + 1
 
 
 
 
 
 def main():
-    srcfile = u"Zhuanti_law.txt"
-    get_info(srcfile)
+    srcfile = u"Law_Book_Info.txt"
+    get_book_info(srcfile)
 
 
 if __name__ == '__main__':

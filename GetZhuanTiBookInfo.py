@@ -132,6 +132,7 @@ def main():
     # zhuanti_str = '金融基本文献'
     # zhuanti_str = '金融统计分析'
     # zhuanti_str = '金融教育培训'
+    # zhuanti_str = '金融百科知识'
     # get_zhuanti_book_info(srcfile,zhuanti_str)
 
     # 第二步
@@ -141,6 +142,8 @@ def main():
     # prefix = 'report'
     # srcfile = u"zhuanti_金融教育培训.txt"
     # prefix = 'edu'
+    # srcfile = u"zhuanti_金融百科知识.txt"
+    # prefix = 'baike'
     # create_get_zhuanti_book_info_sql(srcfile,prefix)
 
 
@@ -151,6 +154,8 @@ def main():
     # prefix = 'report'
     # srcfile = u"edu_book_info_guid.txt"
     # prefix = 'edu'
+    # srcfile = u"baike_book_info_guid.txt"
+    # prefix = 'baike'
     # create_get_zhuanti_book_content_sql(srcfile,prefix)
 
     # 第四步
@@ -160,6 +165,8 @@ def main():
     # prefix = 'report'
     # srcfile = u"edu_book_info_guid.txt"
     # prefix = 'edu'
+    # srcfile = u"baike_book_info_guid.txt"
+    # prefix = 'baike'
     # create_get_zhuanti_title_info_sql(srcfile,prefix)
 
     # 第五步
@@ -169,6 +176,8 @@ def main():
     # prefix = 'report'
     # srcfile = u"edu_title_info_guid.txt"
     # prefix = 'edu'
+    # srcfile = u"baike_title_info_guid.txt"
+    # prefix = 'baike'
     # create_get_zhuanti_title_content_sql(srcfile,prefix)
 
     # 第六步
@@ -178,7 +187,9 @@ def main():
     # prefix = 'report'
     # srcfile = u"edu_title_info_guid.txt"
     # prefix = 'edu'
-    # create_get_zhuanti_mulu_level_sql(srcfile,prefix)
+    srcfile = u"baike_title_info_guid.txt"
+    prefix = 'baike'
+    create_get_zhuanti_mulu_level_sql(srcfile,prefix)
 
 
 if __name__ == '__main__':

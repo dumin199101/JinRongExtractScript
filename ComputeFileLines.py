@@ -14,5 +14,5 @@ def compute_lines(filepath):
 
 
 if __name__ == '__main__':
-    filepath = "Content_PDF_File.txt"
+    filepath = "Baike_Word_Docs.txt"
     compute_lines(filepath)

@@ -63,7 +63,64 @@ def get_doc_list(name, link):
     soup = BeautifulSoup(html, features='lxml')
 
     # 业务逻辑代码
+    # content_body = soup.find(class_="main-content")
+    # # ①去除特色词条标识
+    # if content_body.find('a', class_="excellent-icon") is not None:
+    #     content_body.find('a', class_="excellent-icon").extract()
+    # # ②去掉顶部工具栏
+    # if content_body.find('div', class_="top-tool") is not None:
+    #     content_body.find('div', class_="top-tool").extract()
+    # # ③去掉锁定图标
+    # if content_body.find('a', class_="lock-lemma") is not None:
+    #     content_body.find('a', class_="lock-lemma").extract()
+    # # ④去掉讨论图标
+    # if content_body.find('a', class_="lemma-discussion") is not None:
+    #     content_body.find('a', class_="lemma-discussion").extract()
+    # # ⑤去除图片标签
+    # img_list = content_body.find_all("a", class_="image-link")
+    # for img_tag in img_list:
+    #     img_tag['href'] = 'javascript:void(0);'
+    #     img_tag['target'] = '_self'
+    #     img_tag.find("img")['src'] = img_tag.find("img")['data-src']
+    #     img_tag.find("img")['data-src'] = ''
+    #     img_tag.find("img")['class'] = ''
+    # img_list_1 = content_body.find_all("a", class_="lemma-album")
+    # for img_tag in img_list_1:
+    #     img_tag['href'] = 'javascript:void(0);'
+    #     img_tag['target'] = '_self'
+    #
+    # # ⑥去除a标签链接
+    # a_list = content_body.find_all("a")
+    # for a_tag in a_list:
+    #     a_tag['href'] = 'javascript:void(0);'
+    #     a_tag['target'] = '_self'
+    # # ⑦去除词条图册：
+    # if content_body.find('div', class_="album-list") is not None:
+    #     content_body.find('div', class_="album-list").extract()
+    # # ⑧去除图说，参考文献，标签
+    # if content_body.find('div', class_="tashuo-bottom") is not None:
+    #     content_body.find('div', class_="tashuo-bottom").extract()
+    # if content_body.find('dl', class_="lemma-reference") is not None:
+    #     content_body.find('dl', class_="lemma-reference").extract()
+    # if content_body.find('div', id="open-tag") is not None:
+    #     content_body.find('div', id="open-tag").extract()
+    # if content_body.find('a', class_="edit-lemma") is not None:
+    #     content_body.find('a', class_="edit-lemma").extract()
+    # if content_body.find('a', class_="edit-icon") is not None:
+    #     content_body.find('a', class_="edit-icon").extract()
+    # if content_body.find('iframe') is not None:
+    #     content_body.find('iframe').extract()
+    #
+    # # 获取简介
+    # summary = ''
+    # sumamrty_tag = soup.find(class_="lemma-summary")
+    # for string in sumamrty_tag.stripped_strings:
+    #     summary = summary + string
+
+
+    # 业务逻辑代码2
     content_body = soup.find(class_="main-content")
+
     # ①去除特色词条标识
     if content_body.find('a', class_="excellent-icon") is not None:
         content_body.find('a', class_="excellent-icon").extract()
@@ -77,17 +134,12 @@ def get_doc_list(name, link):
     if content_body.find('a', class_="lemma-discussion") is not None:
         content_body.find('a', class_="lemma-discussion").extract()
     # ⑤去除图片标签
-    img_list = content_body.find_all("a", class_="image-link")
+    img_list = content_body.find_all("div", class_="lemma-picture")
     for img_tag in img_list:
-        img_tag['href'] = 'javascript:void(0);'
-        img_tag['target'] = '_self'
-        img_tag.find("img")['src'] = img_tag.find("img")['data-src']
-        img_tag.find("img")['data-src'] = ''
-        img_tag.find("img")['class'] = ''
+        img_tag.extract()
     img_list_1 = content_body.find_all("a", class_="lemma-album")
     for img_tag in img_list_1:
-        img_tag['href'] = 'javascript:void(0);'
-        img_tag['target'] = '_self'
+        img_tag.extract()
 
     # ⑥去除a标签链接
     a_list = content_body.find_all("a")
@@ -110,6 +162,11 @@ def get_doc_list(name, link):
         content_body.find('a', class_="edit-icon").extract()
     if content_body.find('iframe') is not None:
         content_body.find('iframe').extract()
+    # 新查找的问题：
+    if content_body.find('div', class_="edit-prompt") is not None:
+        content_body.find('div', class_="edit-prompt").extract()
+    if content_body.find('div', class_="lemma-map") is not None:
+        content_body.find('div', class_="lemma-map").extract()
 
     # 获取简介
     summary = ''
@@ -117,8 +174,8 @@ def get_doc_list(name, link):
     for string in sumamrty_tag.stripped_strings:
         summary = summary + string
 
-    print summary
-    write_mapping_log("Org_Details.txt",name+"\t"+summary+"\t"+del_blank_char(str(content_body))+"\n")
+    # 记录日志
+    write_mapping_log("Org_Details_1.txt",name+"\t"+summary+"\t"+del_blank_char(str(content_body))+"\n")
     response.close()
 
 
@@ -177,20 +234,20 @@ def test_get_doc(link):
     if content_body.find('a', class_="lemma-discussion") is not None:
         content_body.find('a', class_="lemma-discussion").extract()
     # ⑤去除图片标签
-    img_list = content_body.find_all("a",class_="image-link")
-    # img_list = content_body.find_all("div",class_="lemma-picture")
+    # img_list = content_body.find_all("a",class_="image-link")
+    img_list = content_body.find_all("div",class_="lemma-picture")
     for img_tag in img_list:
-        # img_tag.extract()
-        img_tag['href'] = 'javascript:void(0);'
-        img_tag['target'] = '_self'
-        img_tag.find("img")['src'] = img_tag.find("img")['data-src']
-        img_tag.find("img")['data-src'] = ''
-        img_tag.find("img")['class'] = ''
+        img_tag.extract()
+        # img_tag['href'] = 'javascript:void(0);'
+        # img_tag['target'] = '_self'
+        # img_tag.find("img")['src'] = img_tag.find("img")['data-src']
+        # img_tag.find("img")['data-src'] = ''
+        # img_tag.find("img")['class'] = ''
     img_list_1 = content_body.find_all("a", class_="lemma-album")
     for img_tag in img_list_1:
-        # img_tag.extract()
-        img_tag['href'] = 'javascript:void(0);'
-        img_tag['target'] = '_self'
+        img_tag.extract()
+        # img_tag['href'] = 'javascript:void(0);'
+        # img_tag['target'] = '_self'
 
     # ⑥去除a标签链接
     a_list = content_body.find_all("a")
@@ -213,6 +270,16 @@ def test_get_doc(link):
         content_body.find('a', class_="edit-icon").extract()
     if content_body.find('iframe') is not None:
         content_body.find('iframe').extract()
+    # 新查找的问题：
+    if content_body.find('div', class_="edit-prompt") is not None:
+        content_body.find('div', class_="edit-prompt").extract()
+    if content_body.find('div', class_="lemma-map") is not None:
+        content_body.find('div', class_="lemma-map").extract()
+
+
+
+
+
     print content_body.prettify()
 
     # 获取简介
@@ -237,6 +304,8 @@ def main():
     # link = "https://baike.baidu.com/item/%E8%81%94%E6%B3%B0%E5%A4%A7%E9%83%BD%E4%BC%9A%E4%BA%BA%E5%AF%BF%E4%BF%9D%E9%99%A9%E6%9C%89%E9%99%90%E5%85%AC%E5%8F%B8/6411684?fr=aladdin"
     # link = "https://baike.baidu.com/item/%E5%B9%B3%E5%AE%89%E9%93%B6%E8%A1%8C/10609311?fr=aladdin"
     # link = "https://baike.baidu.com/item/%E6%B7%B1%E5%9C%B3%E5%B8%82%E5%B0%8F%E8%B5%A2%E7%A7%91%E6%8A%80%E6%9C%89%E9%99%90%E8%B4%A3%E4%BB%BB%E5%85%AC%E5%8F%B8"
+    # link = "https://baike.baidu.com/item/%E4%B8%AD%E5%9B%BD%E4%BA%BA%E6%B0%91%E9%93%B6%E8%A1%8C%E6%B8%85%E7%AE%97%E6%80%BB%E4%B8%AD%E5%BF%83"
+    # link = "https://baike.baidu.com/item/%E5%A4%A7%E9%80%9A%E8%AF%81%E5%88%B8%E8%82%A1%E4%BB%BD%E6%9C%89%E9%99%90%E5%85%AC%E5%8F%B8"
     # test_get_doc(link)
 
 

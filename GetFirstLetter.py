@@ -114,11 +114,14 @@ def get_first_letter(srcfile):
             if len(line) < 1:
                 break
             info = regex_tab.split(line)
-            id = info[0]
-            word = info[1].encode("utf-8").strip("\n")
+            # id = info[0]
+            # word = info[1].encode("utf-8").strip("\n")
+            word = info[0]
             letter = single_get_first(word)
-            write_mapping_log("Baike_Word_FirstLetter.txt",id+"\t"+word+"\t"+letter.upper()+"\n")
-            print j, id, word, letter.upper()
+            # write_mapping_log("Baike_Word_FirstLetter.txt",id+"\t"+word+"\t"+letter.upper()+"\n")
+            write_mapping_log("OrgList_FirstLetter.txt",word+"\t"+letter.upper()+"\n")
+            # print j, id, word, letter.upper()
+            print j,word,letter.upper()
             j = j + 1
 
 
@@ -130,7 +133,8 @@ def main():
     # print b
 
     # 获取首字母：
-    srcfile = 'baike_search_word_info.txt'
+    # srcfile = 'baike_search_word_info.txt'
+    srcfile = 'org_list.txt'
     get_first_letter(srcfile)
 
 
